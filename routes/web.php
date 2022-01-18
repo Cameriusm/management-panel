@@ -22,8 +22,8 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-Route::group(['middleware' => ['role:worker|manager|admin']], function () {
-    // Route::get('/panel', function(){
-    //     return view('test');
-    // });
+Route::middleware(['role:worker|manager|admin'])->prefix('panel')->group(function () {
+   
+Route::get('/', [App\Http\Controllers\Panel\HomeController::class, 'index']);
+
 });
