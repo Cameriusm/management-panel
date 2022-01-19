@@ -25,5 +25,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::middleware(['role:worker|manager|admin'])->prefix('panel')->group(function () {
    
 Route::get('/', [App\Http\Controllers\Panel\HomeController::class, 'index']);
+Route::get('/create', [App\Http\Controllers\Panel\CreateController::class, 'index']);
+Route::get('/list', [App\Http\Controllers\Panel\ListController::class, 'index']);
+Route::get('/rights', [App\Http\Controllers\Panel\RightsController::class, 'index']);
+Route::get('/verify', [App\Http\Controllers\Panel\VerifyController::class, 'index']);
+Route::get('/reports', [App\Http\Controllers\Panel\ReportsController::class, 'index']);
 
 });

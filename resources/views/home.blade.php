@@ -19,7 +19,7 @@
 </p>    
                     {{-- {{ __('You are logged in!') }} --}}
                 </div>
-                    <a href="http://localhost/management-panel/public/panel">
+                    <a href="/panel">
                         <br/>
                     <button type="button" class="btn btn-secondary">Перейти к панели</button></a>
                 </div>
