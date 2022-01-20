@@ -34,9 +34,9 @@
 <div class="wrapper">
   
   <!-- Preloader -->
-  <div class="preloader flex-column justify-content-center align-items-center">
+  {{-- <div class="preloader flex-column justify-content-center align-items-center">
     <img class="animation__shake" src="/panels/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-  </div>
+  </div> --}}
 
 
   <!-- Main Sidebar Container -->
@@ -92,11 +92,12 @@
     </div>
 
       <!-- Sidebar Menu -->
-      <nav class="mt-2">
+      <nav class="mt-2  ">
+        
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-               <li class="nav-item menu-open">
+               with font-awesome or any other icon font library --><li class="nav-header">ГЛАВНОЕ МЕНЮ</li>
+               <li class="nav-item ">
                 {{-- <a href="#" class="nav-link active"> --}}
                   <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -107,7 +108,7 @@
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href="/panel/reports" class="nav-link">
+                    <a href="#" class="nav-link">
                       <i class="far fa-circle nav-icon"></i>
                       <p>Отчёты за сегодня</p>
                     </a>
@@ -123,9 +124,19 @@
                 </ul>
               </li> --}}
            
-          <li class="nav-header">АДМИНИСТРИРОВАНИЕ</li>
+          <li class="nav-header">МЕНЕДЖМЕНТ</li>
           <li class="nav-item">
-            <a href="/panel/list" class="nav-link">
+            {{-- <a href="/panel/create" class="nav-link"> --}}
+            <a href="{{ route('reports.create') }}" class="nav-link">
+              <i class="nav-icon fas fa-columns"></i>
+              {{-- <i class="nav-icon fas fa-edit"></i> --}}
+              <p>
+                Создать отчёт
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('reports.index') }}" class="nav-link">
               <i class="nav-icon far fa-calendar-alt"></i>
               <p>
                 Список отчётов
@@ -134,29 +145,21 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/panel/rights" class="nav-link">
-              <i class="nav-icon far fa-plus-square"></i>
-              {{-- <i class="nav-icon far fa-image"></i> --}}
-              <p>
-                Изменение прав
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/panel/create" class="nav-link">
-              {{-- <i class="nav-icon fas fa-columns"></i> --}}
-              <i class="nav-icon fas fa-edit"></i>
-              <p>
-                Создать отчёт
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/panel/verify" class="nav-link">
+            <a href="{{route('verify.index')}}" class="nav-link">
               {{-- <i class="nav-icon fas fa-columns"></i> --}}
               <i class="nav-icon fas fa-table"></i>
               <p>
                 Подтверждение
+              </p>
+            </a>
+          </li>
+          <li class="nav-header">АДМИНИСТРИРОВАНИЕ</li>
+          <li class="nav-item">
+            <a href="{{route('rights.index')}}" class="nav-link">
+              <i class="nav-icon far fa-plus-square"></i>
+              {{-- <i class="nav-icon far fa-image"></i> --}}
+              <p>
+                Изменение прав
               </p>
             </a>
           </li>
@@ -237,5 +240,6 @@
 <script src="/panels/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="/panels/dist/js/pages/dashboard.js"></script>
+<script src="/panels/panel.js"></script>
 </body>
 </html>

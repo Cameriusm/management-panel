@@ -20,30 +20,48 @@
                 <th class="text-center"><strong>№</strong></th>
                 <th class="text-center"><strong>Имя</strong></th>
                 <th class="text-center"><strong>Фамилия</strong></th>
+                <th class="text-center"><strong>Дата создания</strong></th>
                 <th class="text-center"><strong>Действия</strong></th>
               </tr>
             </thead>
             <tbody>
+              @foreach ($verifieds as $verified)
               <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                
+                <th>{{$verified->id}}</th>
+                <th>{{$verified->name}}</th>
+                <th>{{$verified->email}}</th>
+                <th>{{$verified->created_at}}</th>
+                {{-- <th>{{$verified->role_id}}</th> --}}
+                <td class="project-actions text-right">
+                  <a class="btn btn-info btn-sm" href="#">
+                  {{-- <a class="btn btn-info btn-sm" href="{{ route('post.edit', $post['id']) }}"> --}}
+                      <i class="fas fa-pencil-alt">
+                      </i>
+                      Редактировать
+                  </a>
+                  {{-- <form action="{{ route('post.destroy', $post['id']) }}" method="POST" --}}
+                  <form action="#" method="POST"
+                      style="display: inline-block">
+                      @csrf
+                      @method('DELETE')
+                      <button type="submit" class="btn btn-danger btn-sm delete-btn">
+                          <i class="fas fa-trash">
+                          </i>
+                          Удалить
+                      </button>
+                  </form>
+              </td>
               </tr>
+              @endforeach
             </tbody>
           </table>
         </div>
         </div> <!-- /.row-->
     </div>
   </div>
-          <!-- /.row -->
-          <!-- Main row -->
-        
-          <!-- /.row (main row) -->
-        </div><!-- /.container-fluid -->
-      </section>
+</div><!-- /.container-fluid -->
+
     <!-- /.content -->
 
   <!-- /.content-wrapper -->
-  @endsection
+@endsection
