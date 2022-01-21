@@ -27,12 +27,27 @@
             <tbody>
               @foreach ($rights as $right)
               <tr>
-                <th>{{$right->name}}</th>
-                <th>{{$right->email}}</th>
-                <th>{{$right->role}}</th>
-                <th>
-                  {{ App\Models\ModelHasRole::getUserRoleByReportId($right->id) }}
-
+                <th class="text-center">{{$right->id}}</th>
+                <th class="text-center">{{$right->name}}</th>
+                <th class="text-center">{{$right->email}}</th>
+                <th class="text-center">
+                  @switch(App\Models\ModelHasRole::getUserRoleByReportId($right->id))
+                      @case(1)
+                          <p>Гость (1)</p>
+                      @break
+                      @case(2)
+                          <p>Работник (2)</p>
+                      @break
+                      @case(3)
+                          <p>Менеджер (3)</p>
+                      @break
+                      @case(4)
+                          <p>Администратор (4)</p>
+                      @break
+                      @default
+                          <p>¯\_(ツ)_/¯ (0)</p> 
+                  @endswitch
+                  {{-- {{ App\Models\ModelHasRole::getUserRoleByReportId($right->id) }} --}}
                 </th>
                 {{-- <th>{{ModelHasRoles:model_has_roles:->where('model_id', $right->id)->value('role_id')}}</th> --}}
                 {{-- <th>{{ModelHasRoles:model_has_roles:->where('model_id', $right->id)->value('role_id')}}</th> --}}
