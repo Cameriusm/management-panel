@@ -32,6 +32,12 @@
               <th>{{$report->desc}}</th>
               <th>{{Auth::user()->where('id', $report->user_id)->value('name')}}</th>
               <td class="project-actions text-right">
+                <a class="btn btn-primary btn-sm" href="#">
+                  {{-- <a class="btn btn-info btn-sm" href="{{ route('post.edit', $post['id']) }}"> --}}
+                      <i class="fas fa-pencil-alt">
+                      </i>
+                      Просмотреть
+                  </a>
                 <a class="btn btn-info btn-sm" href="#">
                 {{-- <a class="btn btn-info btn-sm" href="{{ route('post.edit', $post['id']) }}"> --}}
                     <i class="fas fa-pencil-alt">
@@ -39,7 +45,7 @@
                     Редактировать
                 </a>
                 {{-- <form action="{{ route('post.destroy', $post['id']) }}" method="POST" --}}
-                <form action="#" method="POST"
+                {{-- <form action="#" method="POST"
                     style="display: inline-block">
                     @csrf
                     @method('DELETE')
@@ -48,7 +54,7 @@
                         </i>
                         Удалить
                     </button>
-                </form>
+                </form> --}}
             </td>
               
             </tr>    

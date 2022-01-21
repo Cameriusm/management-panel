@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\ModelHasRole;
 class VerifyController extends Controller
 {
     /**
@@ -14,9 +15,7 @@ class VerifyController extends Controller
     public function index()
     {
         //
-        // $verifed = User::orderBy('id','desc').join('model_has_roles', 'model_id', '=', 'model_has_roles.role_id');
         $verifieds = User::join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')->where('role_Id','1')->get();
-        // return view($verifed);
         return view('panel.home.verify', [
             'verifieds' => $verifieds
         ]);
@@ -74,7 +73,9 @@ class VerifyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $current = ModelHasRole::where('model_id', $id)->update(array('role_id' => '2'));
+        return redirect()->back()->withSuccess('Пользователь был успешно подтверждён!');
+
     }
 
     /**

@@ -8,6 +8,12 @@
     <!-- /.content-header -->
 
     <!-- Main content -->
+    @if (session('success'))
+                <div class="alert alert-success" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-check"></i>{{ session('success') }}</h4>
+                </div>
+            @endif
     <div class="container">
       <div class=" text-center pt-5 ">
       <h1>Подтверждение пользователей</h1>
@@ -33,21 +39,21 @@
                 <th>{{$verified->created_at}}</th>
                 {{-- <th>{{$verified->role_id}}</th> --}}
                 <td class="project-actions text-right">
-                  <a class="btn btn-info btn-sm" href="#">
+                  {{-- <a class="btn btn-info btn-sm" href="#"> --}}
                   {{-- <a class="btn btn-info btn-sm" href="{{ route('post.edit', $post['id']) }}"> --}}
-                      <i class="fas fa-pencil-alt">
+                      {{-- <i class="fas fa-pencil-alt">
                       </i>
-                      Редактировать
-                  </a>
-                  {{-- <form action="{{ route('post.destroy', $post['id']) }}" method="POST" --}}
-                  <form action="#" method="POST"
+                      Подтвердить
+                  </a> --}}
+                  <form action="{{ route('verify.update', $verified['id']) }}" method="POST"
+                  {{-- <form action="#" method="POST" --}}
                       style="display: inline-block">
                       @csrf
-                      @method('DELETE')
-                      <button type="submit" class="btn btn-danger btn-sm delete-btn">
-                          <i class="fas fa-trash">
+                      @method('PUT')
+                      <button type="submit" class="btn btn-info btn-sm delete-btn">
+                          <i class="fas fa-pencil-alt">
                           </i>
-                          Удалить
+                          Подтвердить
                       </button>
                   </form>
               </td>
