@@ -82,9 +82,18 @@
           <a href="#" class="d-block">Роль: Администратор</a>
           ...
           @endif --}}
-          <a>Дата: {{ \Carbon\Carbon::now()->toDateString() }} 
+          <a>Дата:
+            <div class="d-inline" id="livedate">
+            
+              {{-- {{ \Carbon\Carbon::now()->timezone('Asia/Krasnoyarsk')->format('H:i:s') }}  --}}
+              {{ \Carbon\Carbon::now()->toDateString() }} 
+             </div>
+            
           </a>
-          <a>Время: {{ \Carbon\Carbon::now()->format('h:i') }} 
+          <a id="">Время:  <div class="d-inline" id="livetime">
+            
+           {{ \Carbon\Carbon::now()->timezone('Asia/Krasnoyarsk')->format('H:i:s') }} 
+          </div>
           </a>
         </div>
       </div>
@@ -206,6 +215,31 @@
 </div>
 <!-- ./wrapper -->
 
+<script type="text/javascript">
+  function showTime() {
+    function addZero(i) {
+      if (i < 10) {i = "0" + i}
+      return i;
+    }
+
+    const d = new Date();
+    d.toLocaleString('ru-RU', { timeZone: 'Asia/Krasnoyarsk' })
+    let h = addZero(d.getHours());
+    let m = addZero(d.getMinutes());
+    let s = addZero(d.getSeconds());
+    let time = h + ":" + m + ":" + s;
+    let date = 
+    document.getElementById("livetime").innerHTML = time;
+    var dd = String(d.getDate()).padStart(2, '0');
+    var mm = String(d.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = d.getFullYear();
+
+    today = yyyy + '-' + mm + '-' + dd;   
+    document.getElementById("livedate").innerHTML = today;
+  }
+
+  setInterval(showTime, 1000);
+</script>
 <!-- jQuery -->
 <script src="/panels/plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
