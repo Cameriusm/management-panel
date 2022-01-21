@@ -17,25 +17,20 @@ use App\Http\Controllers\VerifyController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 Route::middleware(['role:worker|manager|admin'])->prefix('panel')->group(function () {
    
     
     Route::get('/', [App\Http\Controllers\Panel\HomeController::class, 'index']);
-    // Route::post('/create', [App\Http\Controllers\Panel\CreateController::class, 'index']);
-    // Route::post('/list', [App\Http\Controllers\Panel\ListController::class, 'index']);
-    // Route::post('/rights', [App\Http\Controllers\Panel\RightsController::class, 'index']);
-    // Route::post('/verify', [App\Http\Controllers\Panel\VerifyController::class, 'index']);
     Route::resource('reports', ReportController::class);
     Route::resource('rights', RightController::class);
     Route::resource('verify', VerifyController::class);
-// Route::post('/reports', [App\Http\Controllers\Panel\ReportsController::class, 'index']);
 
 });
