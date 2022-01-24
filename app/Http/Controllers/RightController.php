@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\ModelHasRoles;
-
+use App\Models\ModelHasRole;
+use Auth;
 class RightController extends Controller
 {
     /**
@@ -54,8 +54,13 @@ class RightController extends Controller
      */
     public function show($id)
     {
-        //
+        $rights = User::find($id);
+        $rights->role_id = $rights->roles->pluck('id');
+        return response()->json($rights);
+    //   $test = Test::whereSlug($slug)->firstOrFail();
+    //   return view('panel.home.show', compact('test'));
     }
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -77,7 +82,18 @@ class RightController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // $product = Product::find($product_id);
+        // $product->name = $request->name;
+        // $product->price = $request->price;
+        // $product->save();
+        // return response()->json($product);
+        // \Log::info($id);
+        $role = ModelHasRole::where('model_id', $id)->first(); 
+        $role->role_id = $request->role_id;
+        // return $role;
+        // $role->id = $request->id;
+        $role->save();
+        return response()->json($role);
     }
 
     /**

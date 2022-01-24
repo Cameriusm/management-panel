@@ -16,6 +16,7 @@ class ReportController extends Controller
     {
         //
         $reports = Report::orderBy('created_at', 'desc')->get();
+        
         return view('panel.home.reports', [
             'reports' => $reports
         ]);

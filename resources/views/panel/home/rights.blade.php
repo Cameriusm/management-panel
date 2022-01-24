@@ -26,40 +26,35 @@
             </thead>
             <tbody>
               @foreach ($rights as $right)
-              <tr>
+              <tr ">
                 <th class="text-center">{{$right->id}}</th>
                 <th class="text-center">{{$right->name}}</th>
                 <th class="text-center">{{$right->email}}</th>
-                <th class="text-center">
+                <th class="text-center" id="th-{{$right->id}}">
                   @switch(App\Models\ModelHasRole::getUserRoleByReportId($right->id))
                       @case(1)
-                          <p>Гость (1)</p>
+                          <p>Гость</p>
                       @break
                       @case(2)
-                          <p>Работник (2)</p>
+                          <p>Работник</p>
                       @break
                       @case(3)
-                          <p>Менеджер (3)</p>
+                          <p>Менеджер</p>
                       @break
                       @case(4)
-                          <p>Администратор (4)</p>
+                          <p>Администратор</p>
                       @break
                       @default
-                          <p>¯\_(ツ)_/¯ (0)</p> 
+                          <p>¯\_(ツ)_/¯</p> 
                   @endswitch
-                  {{-- {{ App\Models\ModelHasRole::getUserRoleByReportId($right->id) }} --}}
                 </th>
-                {{-- <th>{{ModelHasRoles:model_has_roles:->where('model_id', $right->id)->value('role_id')}}</th> --}}
-                {{-- <th>{{ModelHasRoles:model_has_roles:->where('model_id', $right->id)->value('role_id')}}</th> --}}
                 <td class="project-actions text-right">
-                  <a class="btn btn-info btn-sm" href="#">
-                  {{-- <a class="btn btn-info btn-sm" href="{{ route('post.edit', $post['id']) }}"> --}}
-                      <i class="fas fa-pencil-alt">
-                      </i>
-                      Редактировать
-                  </a>
-                  {{-- <form action="{{ route('post.destroy', $post['id']) }}" method="POST" --}}
-                  <form action="#" method="POST"
+                  <button class="btn btn-warning btn-detail btn-sm open_modal" value="{{$right->id}}">
+                    <i class="fas fa-pencil-alt">
+                    </i>
+                    Редактировать
+                  </button>
+                  {{-- <form action="#" method="POST"
                       style="display: inline-block">
                       @csrf
                       @method('DELETE')
@@ -68,23 +63,63 @@
                           </i>
                           Удалить
                       </button>
-                  </form>
+                  </form> --}}
               </td>
               </tr>
                   
               @endforeach
+
+              <!-- Passing BASE URL to AJAX -->
+              <input id="url" type="hidden" value="{{ \Request::url() }}">
+                    <!-- MODAL SECTION -->
+              <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title" id="myModalLabel">Изменение прав</h4>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    </div>
+                    <div class="modal-body">
+                      <form id="frmProducts" name="frmProducts" class="form-horizontal" novalidate="">
+                        <div class="form-group error">
+                          <label for="inputName" class="col-sm-3 control-label" >Имя</label>
+                          <div class="col-sm-9">
+                            <input readonly type="text" class="form-control has-error" id="name" name="name" placeholder="Product Name" value="">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="inputDetail" class="col-sm-3 control-label">Почта</label>
+                          <div class="col-sm-9">
+                            <input readonly type="email" class="form-control" id="email" name="email" placeholder="Email" value="">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="inputDetail" class="col-sm-3 control-label">Роль</label>
+                          <div class="col-sm-9">
+                            <select  class="form-control" id="role" name="role" placeholder="Роль" >
+                                        <option value="1">Гость</option>
+                                        <option value='2'>Рабочий</option>
+                                        <option value="3">Менеджер</option>
+                                        <option value="4">Администратор</option>
+                                      </select>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-primary" id="btn-save" value="update">Сохранить изменения</button>
+                      <input type="hidden" id="user_id" name="user_id" value="">
+                    </div>
+                  </div>
+                </div>
+              </div>
             </tbody>
           </table>
         </div>
         </div> <!-- /.row-->
     </div>
-  </div>
-          <!-- /.row -->
-          <!-- Main row -->
-        
-          <!-- /.row (main row) -->
-        </div><!-- /.container-fluid -->
-      </section>
+  </div><!-- /.container-fluid -->
+
     <!-- /.content -->
 
   <!-- /.content-wrapper -->
