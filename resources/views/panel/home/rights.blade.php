@@ -31,7 +31,7 @@
                 <th class="text-center">{{$right->name}}</th>
                 <th class="text-center">{{$right->email}}</th>
                 <th class="text-center" id="th-{{$right->id}}">
-                  @switch(App\Models\ModelHasRole::getUserRoleByReportId($right->id))
+                  @switch($right->role_id)
                       @case(1)
                           <p>Гость</p>
                       @break

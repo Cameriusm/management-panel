@@ -146,6 +146,16 @@
             </a>
           </li>
           <li class="nav-item">
+            {{-- <a href="/panel/create" class="nav-link"> --}}
+            <a href="{{ route('staff.index') }}" class="nav-link">
+              <i class="nav-icon fas fa-building"></i>
+              {{-- <i class="nav-icon fas fa-edit"></i> --}}
+              <p>
+                Список сотрудников
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="{{ route('reports.index') }}" class="nav-link">
               <i class="nav-icon far fa-calendar-alt"></i>
               <p>

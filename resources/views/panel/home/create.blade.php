@@ -34,7 +34,7 @@
                               </div>
                               <div class="row">
                                   <div class="col-md-12">
-                                      <div class="form-group"> <label for="form_email">Дата: </label> <input id="form_email" type="text" name="date" class="form-control" placeholder="Укажите дату *" required="required" data-error="Дата обязательна."> </div>
+                                      <div class="form-group"> <label for="form_email">Дата: </label> <input id="form_email" type="text" name="date" class="form-control" placeholder="Укажите дату *" required="required" readonly data-error="Дата обязательна." value="{{ \Carbon\Carbon::now()->toDateString() }}"></input> </div>
                                   </div>
                               </div>
                               <div class="row">

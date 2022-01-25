@@ -6,23 +6,24 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\ModelHasRole;
 use Auth;
-class RightController extends Controller
+class StaffController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        // $ModelHasRoles = new ModelHasRoles;
-        $rights = User::join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')->orderBy('id', 'desc')->get();
-        // return view($rights);
-        return view('panel.home.rights', [
-            'rights' => $rights,
-            // 'ModelHasRoles' => $ModelHasRoles
-        ]);
+        // $users = User::all();
+        // return $users;
+        $users = User::orderBy('id','DESC')->paginate(10);
+        return view('panel.home.staff',compact('users'))
+            ->with('i', ($request->input('page', 1) - 1) * 5);
+        // return view('panel.home.staff',[
+        //     'users'=>$users,
+        // ]);
     }
 
     /**
@@ -54,13 +55,8 @@ class RightController extends Controller
      */
     public function show($id)
     {
-        $rights = User::find($id);
-        $rights->role_id = $rights->roles->pluck('id');
-        return response()->json($rights);
-    //   $test = Test::whereSlug($slug)->firstOrFail();
-    //   return view('panel.home.show', compact('test'));
+        //
     }
-    
 
     /**
      * Show the form for editing the specified resource.
@@ -82,18 +78,7 @@ class RightController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // $product = Product::find($product_id);
-        // $product->name = $request->name;
-        // $product->price = $request->price;
-        // $product->save();
-        // return response()->json($product);
-        // \Log::info($id);
-        $role = ModelHasRole::where('model_id', $id)->first(); 
-        $role->role_id = $request->role_id;
-        // return $role;
-        // $role->id = $request->id;
-        $role->save();
-        return response()->json($role);
+        //
     }
 
     /**

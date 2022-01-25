@@ -10,8 +10,4 @@ class ModelHasRole extends Model
     use HasFactory;
     public $timestamps = false;
     protected $primaryKey = 'model_id';
-
-    public static function getUserRoleByReportId($id){
-        return ModelHasRole::where('model_id', $id)->value('role_id');
-    }
 }
