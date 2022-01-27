@@ -6,6 +6,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RightController;
 use App\Http\Controllers\VerifyController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\ListController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,6 +34,7 @@ Route::middleware(['role:worker|manager|admin'])->prefix('panel')->group(functio
     Route::get('/report', [App\Http\Controllers\Panel\HomeController::class, 'report']);
     Route::resource('reports', ReportController::class);
     Route::resource('staff', StaffController::class);
+    Route::resource('staff.list', ListController::class);
     Route::resource('rights', RightController::class);
     Route::resource('verify', VerifyController::class);
 

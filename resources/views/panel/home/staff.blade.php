@@ -8,7 +8,8 @@
   </div>
   <div class="align-items-center mt-5 m-3 d-flex justify-content-center ">
     <div class="table-responsive w-75">
-        <table class="table table-striped table-hover table-condensed">
+      <table class="table table-striped table-hover table-condensed">
+         <div> Сегодня: {{\Carbon\Carbon::now()->timezone('Asia/Krasnoyarsk')->toDateString()}} </div>
           <thead>
             <tr>
               <th class="text-center"><strong>№</strong></th>
@@ -25,13 +26,23 @@
                 <th>{{$user->id}}</th>
                 <th>{{$user->name}}</th>
                 <th>{{$user->email}}</th>
-                <th></th>
-                <th></th>
+                <th>{{count($user->reports)}}</th>
+                <th>
+                  @if (!empty($user->reports->sortByDesc('created_at')->first()))
+                    @if ($user->reports->sortByDesc('created_at')->first()->created_at->toDateString() == \Carbon\Carbon::now()->timezone('Asia/Krasnoyarsk')->toDateString())
+                      Сдан
+                    @else
+                      Не сдан
+                    @endif
+                @else
+                      Не сдан
+                @endif
+                </th>
                 <th class="project-actions text-center">
                     {{-- <form action="{{ route('verify.update', $verified['id']) }}" method="POST" --}}
-                    <form
+                    <form action="{{ route('staff.list.index', $user->id) }}"
                         style="display: inline-block">
-                        @csrf
+                        
                         <button type="submit" class="btn btn-info btn-sm delete-btn">
                             <i class="fas fa-pencil-alt">
                             </i>

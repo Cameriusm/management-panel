@@ -8,20 +8,19 @@ use App\Models\Report;
 use App\Models\ModelHasRole;
 use Auth;
 use Illuminate\Support\Facades\DB;
-class StaffController extends Controller
+class ListController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, $user_id)
     {
-        $users = User::with(['reports']);
-        $users = $users->get();
-        return view('panel.home.staff',[
-            'users'=>$users,
-        ]);
+        //
+        $users = User::find($user_id);
+        $reports = Report::orderBy('id','desc')->where('user_id', $user_id)->get();
+        return view('panel.home.list', compact('users','reports'));
     }
 
     /**

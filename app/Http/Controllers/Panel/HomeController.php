@@ -8,10 +8,10 @@ use App\Models\Report;
 use App\Models\User;
 use Auth;
 use Illuminate\Support\Facades\DB;
-class HomeController extends Controller
+class HomeController extends Controller 
 {
     public function index() {
-        $submitted = Report::whereDate('created_at', '2022-01-25')
+        $submitted = Report::whereDate('created_at', \Carbon\Carbon::now()->timezone('Asia/Krasnoyarsk')->toDateString())
           ->get('user_id');
         $userSubmitted = User::join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
             ->whereIn('id', $submitted)->get();
