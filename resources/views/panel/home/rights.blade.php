@@ -49,7 +49,7 @@
                   @endswitch
                 </th>
                 <td class="project-actions text-right">
-                  <button class="btn btn-warning btn-detail btn-sm open_modal" value="{{$right->id}}">
+                  <button class="btn btn-warning btn-detail btn-sm open_modal btn_add" value="{{$right->id}}">
                     <i class="fas fa-pencil-alt">
                     </i>
                     Редактировать

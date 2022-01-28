@@ -44,9 +44,10 @@
                         style="display: inline-block">
                         
                         <button type="submit" class="btn btn-info btn-sm delete-btn">
-                            <i class="fas fa-pencil-alt">
-                            </i>
-                            Отчёты
+                          Отчёты
+                          {{-- <i class="far fa-eye">
+
+                          </i> --}}
                         </button>
                     </form>
                 </th>

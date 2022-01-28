@@ -72,6 +72,8 @@ class ReportController extends Controller
     public function edit(Report $report)
     {
         //
+        $report = Report::find($id)->get();
+        return view('panel.home.report',compact('report'));
     }
 
     /**

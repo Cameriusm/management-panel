@@ -31,10 +31,10 @@ Route::middleware(['role:worker|manager|admin'])->prefix('panel')->group(functio
    
     
     Route::get('/', [App\Http\Controllers\Panel\HomeController::class, 'index']);
-    Route::get('/report', [App\Http\Controllers\Panel\HomeController::class, 'report']);
     Route::resource('reports', ReportController::class);
     Route::resource('staff', StaffController::class);
     Route::resource('staff.list', ListController::class);
+    Route::resource('list', ListController::class);
     Route::resource('rights', RightController::class);
     Route::resource('verify', VerifyController::class);
 

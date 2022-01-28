@@ -64,6 +64,8 @@ class ListController extends Controller
     public function edit($id)
     {
         //
+        $report = Report::where('id',$id)->first();
+        return view('panel.home.report',compact('report'));
     }
 
     /**
@@ -76,6 +78,14 @@ class ListController extends Controller
     public function update(Request $request, $id)
     {
         //
+        // return $id;
+        $current = Report::where('id', $id)->first();
+        $current->title = $request->title;
+        $current->created_at = $request->created_at;
+        $current->desc = $request->desc;
+        $current->save();
+        // return $current;
+        return redirect()->back()->withSuccess('Отчёт был успешно отредактирован!');
     }
 
     /**

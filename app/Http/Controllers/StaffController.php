@@ -65,6 +65,7 @@ class StaffController extends Controller
     public function edit($id)
     {
         //
+       
     }
 
     /**

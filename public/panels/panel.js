@@ -16,21 +16,13 @@ $(document).ready(function () {
         }
     });
 
-    // $('.delete-btn').click(function () {
-    //     var res = confirm('Подтвердите действия');
-    //     if(!res){
-    //         return false;
-    //     }
-    // });
-    //get base URL *********************
-    var url = $("#url").val();
-
-    //display modal form for creating new product *********************
-    $("#btn_add").click(function () {
+    $(".btn_add").click(function () {
         $("#btn-save").val("add");
         $("#frmProducts").trigger("reset");
         $("#myModal").modal("show");
     });
+    //get base URL *********************
+    var url = $("#url").val();
 
     //display modal form for product EDIT ***************************
     $(document).on("click", ".open_modal", function () {
@@ -45,6 +37,32 @@ $(document).ready(function () {
                 $("#user_id").val(data.id);
                 $("#name").val(data.name);
                 $("#email").val(data.email);
+                $(`#role option[value=${data.role_id}]`).attr(
+                    "selected",
+                    "selected"
+                );
+                $("#btn-save").val("update");
+                $("#myModal").modal("show");
+            },
+            error: function (data) {
+                console.log("Error:", data);
+            },
+        });
+    });
+    $(document).on("click", ".open_modal_report", function () {
+        var report_id = $(this).val();
+        console.log(report_id);
+        // Populate Data in Edit Modal Form
+        $.ajax({
+            type: "GET",
+            // url: "http://localhost/panel/list/" + report_id,
+            url: url + "/" + report_id,
+            success: function (data) {
+                console.log(data);
+                $("#myModalLabel").val(`Отчёт номер ${report_id}`);
+                // $("#user_id").val(data.id);
+                $("#name").val(data.name);
+                $("#title").val(data.id);
                 $(`#role option[value=${data.role_id}]`).attr(
                     "selected",
                     "selected"

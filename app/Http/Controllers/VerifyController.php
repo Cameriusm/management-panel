@@ -61,7 +61,7 @@ class VerifyController extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**

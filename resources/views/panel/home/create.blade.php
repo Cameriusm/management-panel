@@ -51,12 +51,6 @@
       </div> <!-- /.row-->
   </div>
 </div>
-        <!-- /.row -->
-        <!-- Main row -->
-      
-        <!-- /.row (main row) -->
-      </div><!-- /.container-fluid -->
-    </section>
     <!-- /.content -->
 
   <!-- /.content-wrapper -->
