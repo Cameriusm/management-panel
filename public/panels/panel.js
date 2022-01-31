@@ -1,4 +1,11 @@
 $(document).ready(function () {
+    $(function () {
+        $('[data-toggle="tooltip"]')
+            .tooltip()
+            .mouseleave(function () {
+                $(this).tooltip("hide");
+            });
+    });
     $(".nav-treeview .nav-link, .nav-link").each(function () {
         var location2 =
             window.location.protocol +
@@ -16,12 +23,6 @@ $(document).ready(function () {
         }
     });
 
-    $(".btn_add").click(function () {
-        $("#btn-save").val("add");
-        $("#frmProducts").trigger("reset");
-        $("#myModal").modal("show");
-    });
-    //get base URL *********************
     var url = $("#url").val();
 
     //display modal form for product EDIT ***************************
@@ -50,24 +51,18 @@ $(document).ready(function () {
         });
     });
     $(document).on("click", ".open_modal_report", function () {
-        var report_id = $(this).val();
+        let report_id = $(this).val();
         console.log(report_id);
-        // Populate Data in Edit Modal Form
         $.ajax({
             type: "GET",
-            // url: "http://localhost/panel/list/" + report_id,
-            url: url + "/" + report_id,
+            url: "http://localhost/panel/reports/" + report_id,
+            dataType: "json",
             success: function (data) {
                 console.log(data);
-                $("#myModalLabel").val(`Отчёт номер ${report_id}`);
-                // $("#user_id").val(data.id);
-                $("#name").val(data.name);
-                $("#title").val(data.id);
-                $(`#role option[value=${data.role_id}]`).attr(
-                    "selected",
-                    "selected"
-                );
-                $("#btn-save").val("update");
+                $("#myModalLabel").html(`Отчёт номер ${data.id}`);
+                $("#title").val(data.title);
+                $("#date").val(data.created_at);
+                $("#desc").val(data.desc);
                 $("#myModal").modal("show");
             },
             error: function (data) {
@@ -105,7 +100,6 @@ $(document).ready(function () {
         $.ajax({
             type: type,
             url: my_url,
-            // data: { role_id: "2" },
             data: formData,
             dataType: "json",
             success: function (data) {

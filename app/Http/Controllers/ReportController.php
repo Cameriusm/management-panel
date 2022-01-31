@@ -58,9 +58,13 @@ class ReportController extends Controller
      * @param  \App\Models\Report  $report
      * @return \Illuminate\Http\Response
      */
-    public function show(Report $report)
+    // public function show(Report $report, $id)
+    public function show($id)
     {
         //
+        // return $id;
+        $reportById = Report::where('id',$id)->first();
+        return $reportById;
     }
 
     /**
@@ -72,8 +76,7 @@ class ReportController extends Controller
     public function edit(Report $report)
     {
         //
-        $report = Report::find($id)->get();
-        return view('panel.home.report',compact('report'));
+        
     }
 
     /**

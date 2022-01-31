@@ -53,6 +53,7 @@ class ListController extends Controller
     public function show($id)
     {
         //
+        
     }
 
     /**

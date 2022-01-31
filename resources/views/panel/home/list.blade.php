@@ -65,24 +65,20 @@
           <div class="form-group error">
             <label for="inputName" class="col-sm-3 control-label" >Название</label>
             <div class="col-sm-9">
-              <input readonly type="text" class="form-control has-error" id="name" name="name" placeholder="Product Name" value="">
+              <input readonly type="text" class="form-control has-error" id="title" name="title" placeholder="Product Name" value="">
             </div>
           </div>
           <div class="form-group">
             <label for="inputDetail" class="col-sm-3 control-label">Дата</label>
             <div class="col-sm-9">
-              <input readonly type="email" class="form-control" id="email" name="email" placeholder="Email" value="">
+              <input readonly type="text" class="form-control" id="date" name="date" placeholder="Дата" value="">
             </div>
           </div>
           <div class="form-group">
             <label for="inputDetail" class="col-sm-3 control-label">Содержание</label>
             <div class="col-sm-9">
-              <select  class="form-control" id="role" name="role" placeholder="Роль" >
-                          <option value="1">Гость</option>
-                          <option value='2'>Рабочий</option>
-                          <option value="3">Менеджер</option>
-                          <option value="4">Администратор</option>
-                        </select>
+              <textarea readonly class="form-control" id="desc" name="desc" placeholder="Содержание" >
+              </textarea>
             </div>
           </div>
         </form>
