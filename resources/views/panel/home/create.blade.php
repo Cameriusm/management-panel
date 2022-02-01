@@ -26,9 +26,18 @@
                       <form id="contact-form" action="{{ route('reports.store') }}" method="POST" role="form">
                         @csrf
                           <div class="controls">
+                              @if ($user) 
                               <div class="row">
                                   <div class="col-md-12">
-                                      <div class="form-group"> <label for="form_name">Название *</label> <input id="form_name" type="text" name="title" class="form-control" placeholder="Пожалуйства введите название *" required="required" data-error="Название обязательно."> </div>
+                                      <div class="form-group"> <label for="form_name">Автор *</label> <input id="form_name" type="text" readonly name="author" class="form-control" value="{{$user->name}}" placeholder="Пожалуйства введите пользователя" required="required" data-error="Пользователь обязателен."></div>
+                                  </div>
+                                  <input hidden id="form_user_id" type="text" readonly name="user_id" value="{{$user->id}}"/>
+                              </div>
+
+                              @endif
+                              <div class="row">
+                                  <div class="col-md-12">
+                                      <div class="form-group"> <label for="form_name">Название *</label> <input id="form_title" type="text" name="title" class="form-control" placeholder="Пожалуйства введите название *" required="required" data-error="Название обязательно."> </div>
                                   </div>
                                  
                               </div>
@@ -41,7 +50,7 @@
                                   <div class="col-md-12">
                                       <div class="form-group"> <label for="form_message">Содержание *</label> <textarea id="form_message" name="desc" class="form-control" placeholder="Напишите содержание отчёта." rows="4" required="required" data-error="Содержание отчёта обязательно."></textarea> </div>
                                   </div>
-                                  <div class="col-md-12"> <input type="submit" class="btn btn-primary btn-send pt-2 btn-block " value="Создать отчёт"> </div>
+                                  <div class="col-md-12  text-center"> <input type="submit" class="btn btn-info btn-send pt-2 btn-block " value="Создать отчёт"> </div>
                               </div>
                           </div>
                       </form>

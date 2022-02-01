@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Report;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Auth;
 class ReportController extends Controller
@@ -22,16 +23,25 @@ class ReportController extends Controller
         ]);
         
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($user_id = null)
     {
         //
-        return view('panel.home.create');
+        if ($user_id == null) {
+            $user_id = Auth::id();
+            $user_id = User::find($user_id);
+        } else {
+            $user_id = User::find($user_id);
+        }
+        $user = $user_id;
+        // return $user_id;
+        return view('panel.home.create',compact('user'));
     }
 
     /**
@@ -44,12 +54,17 @@ class ReportController extends Controller
     {
         //
         $new_report = new Report();
+        $currentUserRole = Auth::user()->roles[0]->id;
+        if ($currentUserRole >= 3) {
+            $new_report->user_id = $request->user_id;
+        } else {
+            $new_report->user_id = Auth::user()->id;
+        }
         $new_report->title = $request->title;
         $new_report->desc = $request->desc;
-        $store_user_id = auth()->user()->id;
-        $new_report->user_id = $store_user_id;
         $new_report->save();
         return redirect()->back()->withSuccess('Отчёт был успешно добавлен!');
+        return $currentUserRole;
     }
 
     /**

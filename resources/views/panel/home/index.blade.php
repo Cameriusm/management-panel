@@ -12,7 +12,7 @@
             <div class="small-box bg-info text-center">
               <div class="inner">
                 <h3>{{$userSubmitted->count()}}</h3>
-                <p>Сотрудников сдали отчёт сегодня</p>
+                <p>Сотрудников сдали сегодня отчёт</p>
               </div>
               <div class="icon">
                 <i class="far fa-calendar-plus"></i>
@@ -93,12 +93,12 @@
           <!-- ./col -->
           <div class="col-lg-6 col-6">
             <!-- small box -->
-            <div class="small-box bg-success  text-center">
+            <div class="small-box bg-danger  text-center">
               <div class="inner">
                 {{-- <h3>{{$reportCount}}<sup style="font-size: 20px">%</sup></h3> --}}
                 <h3>{{$userUnsubmitted->count()}}</h3>
 
-                <p>Сотрудников не сдали отчёт сегодня</p>
+                <p>Сотрудников не сдали сегодня отчёт</p>
               </div>
               <div class="icon">
                 <i class="far fa-calendar-minus"></i>
@@ -142,15 +142,15 @@
                       @endswitch</th>
                         <th class="project-actions text-center ">
                           <form
-                          action="{{ route('reports.create', $user->id)}}" class="d-inline">
-                          <button title="Создать отчёт" class="btn btn-success btn-detail btn-sm open_modal" data-toggle="tooltip" value="{{$user->id}}">
+                          action="{{ route('reports.create.user',$user->id) }}" class="d-inline">
+                          <button title="Создать отчёт" class="btn btn-danger btn-detail btn-sm open_modal" data-toggle="tooltip" value="{{$user->id}}">
                             <i class="fas fa-calendar-plus">
                             </i>
                           </button>
                           </form>
                           <form
                           action="{{ route('staff.list.index', $user->id)}}" class="d-inline">
-                          <button title="Все отчёты " class="btn btn-success btn-sm open_modal" data-toggle="tooltip" value="{{$user->id}}">
+                          <button title="Все отчёты " class="btn btn-danger btn-sm open_modal" data-toggle="tooltip" value="{{$user->id}}">
                             <i  class="fas fa-table">
                             </i>
                         </button>
