@@ -6,8 +6,22 @@
     <div class="container">
       <div class=" text-center pt-5 ">
       <h1>Список отчётов</h1>
+    </div>
+    <form action="{{ route('pdfview',['download'=>'pdf']) }}">
+  <div class="container mt-5" style="max-width: 450px">
+    <input class="form-control" name="dates" />
+    <input id="start" name="start" type="hidden"/>
+    <input id="end" name="end" type="hidden"/>
   </div>
-  <div class="align-items-center mt-5 m-3 d-flex justify-content-center ">
+  <div class="mt-3 d-flex justify-content-center">
+    <button class="btn btn-danger btn-sm" type="submit">Download PDF</button>
+  </div>
+</form>
+
+
+{{-- <div class="text-center"> <input type="submit" class="btn btn-info btn-send pt-2 btn-block " value="Скачать PDF"> </div> --}}
+
+  <div class="align-items-center mt-2  m-3 d-flex justify-content-center ">
     <div class="table-responsive w-75">
         <table class="table table-striped table-hover table-condensed">
           <thead>
@@ -22,9 +36,9 @@
           </thead>
           <tbody class="text-center">
             @foreach ($reports as  $report)
-            <tr>
+            <tr class="report-row">
               <th>{{$report->id}}</th>
-              <th>{{$report->created_at}}</th>
+              <th class="report-date">{{$report->created_at->toDateString()}}</th>
               <th>{{Auth::user()->where('id', $report->user_id)->value('name')}}</th>
               <th>{{$report->title}}</th>
               <th>{{$report->desc}}</th>

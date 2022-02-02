@@ -1,4 +1,49 @@
 $(document).ready(function () {
+    $('input[name="dates"]').daterangepicker(
+        {
+            locale: {
+                format: "YYYY.MM.DD",
+                applyLabel: "Ок",
+                cancelLabel: "Отмена",
+                fromLabel: "От",
+                toLabel: "До",
+                customRangeLabel: "Произвольный",
+                daysOfWeek: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
+                monthNames: [
+                    "Январь",
+                    "Февраль",
+                    "Март",
+                    "Апрель",
+                    "Май",
+                    "Июнь",
+                    "Июль",
+                    "Август",
+                    "Сентябрь",
+                    "Октябрь",
+                    "Ноябрь",
+                    "Декабрь",
+                ],
+                firstDay: 1,
+            },
+        },
+        function (start, end, label) {
+            $("#start").val(start.format("YYYY-MM-DD"));
+            $("#end").val(end.format("YYYY-MM-DD"));
+            jQuery(".report-row").each(function () {
+                var reportDate = $(this).find(".report-date").html();
+                if (
+                    reportDate >= start.format("YYYY-MM-DD") &&
+                    reportDate <= end.format("YYYY-MM-DD")
+                ) {
+                    console.log("Correct Date");
+                    $(this).attr("hidden", false);
+                } else {
+                    console.log("Out Side range !!");
+                    $(this).attr("hidden", true);
+                }
+            });
+        }
+    );
     $(function () {
         $('[data-toggle="tooltip"]')
             .tooltip()
