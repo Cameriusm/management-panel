@@ -38,7 +38,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group"> <label for="form_message">Содержание *</label> <textarea id="form_message" name="desc" class="form-control" placeholder="Напишите содержание отчёта." rows="4" required="required" data-error="Содержание отчёта обязательно.">{{$report->desc}}</textarea> </div>
                                     </div>
-                                    <div class="col-md-12"> <input type="submit" class="btn btn-primary btn-send pt-2 btn-block " value="Сохранить отчёт"> </div>
+                                    <div class="col-md-12"> <input type="submit" class="btn btn-info btn-send pt-2 btn-block " value="Сохранить отчёт"> </div>
                                 </div>
                             </div>
                         </form>

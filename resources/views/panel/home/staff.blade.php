@@ -6,55 +6,93 @@
       <div class=" text-center pt-5 ">
       <h1>Список сотрудников</h1>
   </div>
+    <div class="container text-center mt-5" style="max-width: 450px">
+      <label for="unsumbitted-dates" class="col-sm-6  control-label" >Фильтрация по отчётам</label>
+      <input class="form-control" name="unsumbitted-dates" />
+      <input id="start" name="start" type="hidden"/>
+      <input id="end" name="end" type="hidden"/>
+    </div>
   <div class="align-items-center mt-5 m-3 d-flex justify-content-center ">
     <div class="table-responsive w-75">
       <table class="table table-striped table-hover table-condensed">
-         <div> Сегодня: {{\Carbon\Carbon::now()->timezone('Asia/Krasnoyarsk')->toDateString()}} </div>
           <thead>
             <tr>
               <th class="text-center"><strong>№</strong></th>
               <th class="text-center"><strong>Имя</strong></th>
               <th class="text-center"><strong>Почта</strong></th>
               <th class="text-center"><strong>Кол-во отчётов</strong></th>
-              <th class="text-center"><strong>Отчёт за сегодня</strong></th>
+              <th class="text-center"><strong>Отчёт за дату</strong></th>
               <th class="text-center"><strong>Действия</strong></th>
             </tr>
         </thead>
           <tbody>
               @foreach ($users as $user)
-              <tr class="text-center">
-                <th>{{$user->id}}</th>
+              <tr class="staff-row text-center">
+                <th class="staff-id">{{$user->id}}</th>
                 <th>{{$user->name}}</th>
                 <th>{{$user->email}}</th>
                 <th>{{count($user->reports)}}</th>
-                <th>
+                <th class="staff-buttons text-center d-flex justify-content-center">
                   @if (!empty($user->reports->sortByDesc('created_at')->first()))
                     @if ($user->reports->sortByDesc('created_at')->first()->created_at->toDateString() == \Carbon\Carbon::now()->timezone('Asia/Krasnoyarsk')->toDateString())
                      {{-- <span class="text-info">Сдан</span> --}}
-                     <button title="Посмотреть отчёт" class="btn btn-info btn-detail btn-sm btn_add open_modal_report" data-toggle="tooltip" value="{{$user->reports->sortByDesc('created_at')->first()->id}}">
+                     <button name="check-report" title="Посмотреть отчёт" class="btn btn-info btn-detail btn-sm btn_add open_modal_report m-2" data-toggle="tooltip" value="{{$user->reports->sortByDesc('created_at')->first()->id}}">
                       <i class="fas fa-eye">
                       </i>
                   
                     </button>
                     <form
                     action="{{ route('list.edit', $user->reports->sortByDesc('created_at')->first()->id)}}" class="d-inline">
-                    <button title="Редактировать отчёт" class="btn btn-info btn-detail btn-sm open_modal" data-toggle="tooltip" value="{{$user->id}}">
+                    <button name="edit-report" title="Редактировать отчёт" class="btn btn-info btn-detail btn-sm open_modal m-2" data-toggle="tooltip" value="{{$user->id}}">
                       <i class="fas fa-pencil-alt">
                       </i>
                       
                     </button>
                     </form>
-                     @else
-                     {{-- <span class="text-dark">Не Сдан</span> --}}
-                     <form
-                          action="{{ route('reports.create', $user->id)}}" class="d-inline">
-                          <button title="Создать отчёт" class="btn btn-danger btn-detail btn-sm open_modal" data-toggle="tooltip" value="{{$user->id}}">
+                    {{-- <form 
+                    action="{{ route('reports.create', $user->id)}}" class="d-inline">
+                         <button name="create-report" hidden="true" title="Создать отчёт" class="btn btn-danger btn-detail btn-sm open_modal" data-toggle="tooltip" value="{{$user->id}}">
+                           <i class="fas fa-calendar-plus">
+                           </i>
+                         </button>
+                         </form> --}}
+                         @else
+                         {{-- <span class="text-dark">Не Сдан</span> --}}
+                         {{-- <button name="check-report" hidden="true" title="Посмотреть отчёт" class="btn btn-info btn-detail btn-sm btn_add open_modal_report" data-toggle="tooltip" value="{{$user->reports->sortByDesc('created_at')->first()->id}}">
+                          <i class="fas fa-eye">
+                          </i>
+                      
+                        </button> --}}
+                        {{-- <form
+                        action="{{ route('list.edit', $user->reports->sortByDesc('created_at')->first()->id)}}" class="d-inline">
+                        <button name="edit-report" hidden="true" title="Редактировать отчёт" class="btn btn-info btn-detail btn-sm open_modal" data-toggle="tooltip" value="{{$user->id}}">
+                          <i class="fas fa-pencil-alt">
+                          </i>
+                          
+                        </button> --}}
+                        </form>
+                         <form
+                         action="{{ route('reports.create', $user->id)}}" class="d-inline">
+                          <button name="create-report" title="Создать отчёт" class="btn btn-danger btn-detail btn-sm open_modal m-2" data-toggle="tooltip" value="{{$user->id}}">
                             <i class="fas fa-calendar-plus">
                             </i>
                           </button>
                           </form>
                      @endif
                      @else
+                     {{-- <button name="check-report" hidden="true" title="Посмотреть отчёт" class="btn btn-info btn-detail btn-sm btn_add open_modal_report" data-toggle="tooltip" value="{{$user->reports->sortByDesc('created_at')->first()->id}}">
+                      <i class="fas fa-eye">
+                      </i>
+                  
+                    </button> --}}
+                    {{-- <form
+                    action="{{ route('list.edit', $user->reports->sortByDesc('created_at')->first()->id)}}" class="d-inline">
+                    <button name="edit-report" hidden="true" title="Редактировать отчёт" class="btn btn-info btn-detail btn-sm open_modal" data-toggle="tooltip" value="{{$user->id}}">
+                      <i class="fas fa-pencil-alt">
+                      </i>
+                      
+                    </button>
+                    </form> --}}
                      {{-- <span class="text-dark">Не Сдан</span> --}}
                      <form
                           action="{{ route('reports.create', $user->id)}}" class="d-inline">
@@ -66,7 +104,7 @@
                         
                 @endif
                 </th>
-                <th class="project-actions text-center">
+                <th class="project-actions  text-center">
                     {{-- <form action="{{ route('verify.update', $verified['id']) }}" method="POST" --}}
                     <form action="{{ route('staff.list.index', $user->id) }}"
                         style="display: inline-block">
@@ -125,5 +163,9 @@
     <input type="hidden" id="user_id" name="user_id" value="">
   </div>
 </div>
+
+<script>    
+  let users = {!! json_encode($users, JSON_HEX_TAG) !!};
+</script>
 
 @endsection
