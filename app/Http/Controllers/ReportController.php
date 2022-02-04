@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Auth;
 class ReportController extends Controller
 {
+        
     /**
      * Display a listing of the resource.
      *
@@ -88,10 +89,12 @@ class ReportController extends Controller
      * @param  \App\Models\Report  $report
      * @return \Illuminate\Http\Response
      */
-    public function edit(Report $report)
+    public function edit( $id)
     {
         //
-        
+        $report = Report::where('id',$id)->first();
+        $user = User::find($report->user_id);
+        return view('panel.home.report',compact('report','user'));
     }
 
     /**
@@ -101,9 +104,17 @@ class ReportController extends Controller
      * @param  \App\Models\Report  $report
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Report $report)
+    public function update(Request $request, $id)
     {
         //
+        // return $id;
+        $current = Report::where('id', $id)->first();
+        $current->title = $request->title;
+        $current->created_at = $request->created_at;
+        $current->desc = $request->desc;
+        $current->save();
+        // return $current;
+        return redirect()->back()->withSuccess('Отчёт был успешно отредактирован!');
     }
 
     /**

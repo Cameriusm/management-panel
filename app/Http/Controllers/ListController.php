@@ -10,6 +10,10 @@ use Auth;
 use Illuminate\Support\Facades\DB;
 class ListController extends Controller
 {
+    //     public function __construct()
+    // {
+    //         $this->middleware(['role:manager|admin']);
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -53,7 +57,6 @@ class ListController extends Controller
     public function show($id)
     {
         //
-        
     }
 
     /**
@@ -65,9 +68,6 @@ class ListController extends Controller
     public function edit(Request $request, $id)
     {
         //
-        $report = Report::where('id',$id)->first();
-        $user = User::find($report->user_id);
-        return view('panel.home.report',compact('report','user'));
     }
 
     /**
@@ -80,14 +80,6 @@ class ListController extends Controller
     public function update(Request $request, $id)
     {
         //
-        // return $id;
-        $current = Report::where('id', $id)->first();
-        $current->title = $request->title;
-        $current->created_at = $request->created_at;
-        $current->desc = $request->desc;
-        $current->save();
-        // return $current;
-        return redirect()->back()->withSuccess('Отчёт был успешно отредактирован!');
     }
 
     /**

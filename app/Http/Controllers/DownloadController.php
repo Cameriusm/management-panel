@@ -12,6 +12,11 @@ use PDF;
 
 class DownloadController extends Controller
 {
+        public function __construct()
+    {
+            $this->middleware(['role:manager|admin']);
+    }
+    
     public function index(Request $request)
     {
         // $reports = Report::all()->toArray();

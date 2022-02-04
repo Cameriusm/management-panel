@@ -62,7 +62,7 @@
                         
                           </button>
                           <form
-                          action="{{ route('list.edit', $user->reports->sortByDesc('created_at')->first()->id)}}" class="d-inline">
+                          action="{{ route('reports.edit', $user->reports->sortByDesc('created_at')->first()->id)}}" class="d-inline">
                           <button title="Редактировать отчёт" class="btn btn-info btn-detail btn-sm open_modal" data-toggle="tooltip" value="{{$user->id}}">
                             <i class="fas fa-pencil-alt">
                             </i>

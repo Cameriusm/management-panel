@@ -47,7 +47,7 @@
                   <i class="far fa-eye"></i>
          
                 </button>
-                <form action="{{ route('list.edit', $report->id) }}">
+                <form action="{{ route('reports.edit', $report->id) }}">
                   <button class="btn btn-warning btn-sm ml-3 mr-3" >
                     <i class="fas fa-pencil-alt">
                     </i>

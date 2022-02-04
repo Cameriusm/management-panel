@@ -19,7 +19,7 @@
             <div class="card mt-2 mx-auto p-4 bg-light">
                 <div class="card-body bg-light">
                     <div class="container">
-                        <form id="contact-form" action="{{ route('list.update', $report->id) }}" method="post">
+                        <form id="contact-form" action="{{ route('reports.update', $report->id) }}" method="post">
                             @method('PUT')
                             @csrf
                             <div class="controls">

@@ -7,6 +7,11 @@ use App\Models\User;
 use App\Models\ModelHasRole;
 class VerifyController extends Controller
 {
+
+        public function __construct()
+    {
+            $this->middleware(['role:manager|admin']);
+    }
     /**
      * Display a listing of the resource.
      *

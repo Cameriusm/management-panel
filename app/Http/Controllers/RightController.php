@@ -8,6 +8,12 @@ use App\Models\ModelHasRole;
 use Auth;
 class RightController extends Controller
 {
+
+        public function __construct()
+    {
+            $this->middleware(['role:manager|admin']);
+    }
+
     /**
      * Display a listing of the resource.
      *
