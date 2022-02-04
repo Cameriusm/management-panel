@@ -29,7 +29,7 @@
                               @if ($user) 
                               <div class="row">
                                   <div class="col-md-12">
-                                      <div class="form-group"> <label for="form_name">Автор *</label> <input id="form_name" type="text" readonly name="author" class="form-control" value="{{$user->name}}" placeholder="Пожалуйства введите пользователя" required="required" data-error="Пользователь обязателен."></div>
+                                      <div class="form-group"> <label for="form_name">Автор *</label> <input id="form_name" type="text" readonly name="author" class="form-control" value="{{$user->id}} - {{$user->name}}" placeholder="Пожалуйства введите пользователя" required="required" data-error="Пользователь обязателен."></div>
                                   </div>
                                   <input hidden id="form_user_id" type="text" readonly name="user_id" value="{{$user->id}}"/>
                               </div>

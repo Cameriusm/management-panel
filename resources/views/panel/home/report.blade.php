@@ -25,13 +25,17 @@
                             <div class="controls">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="form-group"> <label for="form_name">Название *</label> <input id="form_name" type="text" name="title" class="form-control" placeholder="Пожалуйства введите название *" required="required" data-error="Название обязательно." value="{{$report->title}}"> </div>
+                                        <div class="form-group"> <label for="form_name">Автор *</label> <input readonly id="form_name" type="text" name="title" class="form-control" placeholder="Пожалуйства введите название *" required="required" data-error="Авторство обязательно." value="{{$user->id}} - {{$user->name}}"> </div>
                                     </div>
-                                   
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="form-group"> <label for="form_email">Дата: </label> <input id="form_email" type="text" name="created_at" class="form-control" placeholder="Укажите дату *" required="required"  data-error="Дата обязательна." value="{{ $report->created_at }}"></input> </div>
+                                        <div class="form-group"> <label for="form_name">Название *</label> <input id="form_name" type="text" name="title" class="form-control" placeholder="Пожалуйства введите название *" required="required" data-error="Название обязательно." value="{{$report->title}}"> </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group"> <label for="form-date">Дата: </label> <input id="form-date" type="text" name="created_at" class="form-control" placeholder="Укажите дату *" required="required"  data-error="Дата обязательна." value="{{ $report->created_at }}"></input> </div>
                                     </div>
                                 </div>
                                 <div class="row">

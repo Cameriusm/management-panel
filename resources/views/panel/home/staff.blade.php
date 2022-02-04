@@ -43,57 +43,23 @@
                     </button>
                     <form
                     action="{{ route('list.edit', $user->reports->sortByDesc('created_at')->first()->id)}}" class="d-inline">
-                    <button name="edit-report" title="Редактировать отчёт" class="btn btn-info btn-detail btn-sm open_modal m-2" data-toggle="tooltip" value="{{$user->id}}">
+                    <button name="edit-report" title="Редактировать отчёт" class="btn btn-info btn-detail btn-sm m-2" data-toggle="tooltip" value="{{$user->id}}">
                       <i class="fas fa-pencil-alt">
                       </i>
                       
                     </button>
                     </form>
-                    {{-- <form 
-                    action="{{ route('reports.create', $user->id)}}" class="d-inline">
-                         <button name="create-report" hidden="true" title="Создать отчёт" class="btn btn-danger btn-detail btn-sm open_modal" data-toggle="tooltip" value="{{$user->id}}">
-                           <i class="fas fa-calendar-plus">
-                           </i>
-                         </button>
-                         </form> --}}
                          @else
-                         {{-- <span class="text-dark">Не Сдан</span> --}}
-                         {{-- <button name="check-report" hidden="true" title="Посмотреть отчёт" class="btn btn-info btn-detail btn-sm btn_add open_modal_report" data-toggle="tooltip" value="{{$user->reports->sortByDesc('created_at')->first()->id}}">
-                          <i class="fas fa-eye">
-                          </i>
-                      
-                        </button> --}}
-                        {{-- <form
-                        action="{{ route('list.edit', $user->reports->sortByDesc('created_at')->first()->id)}}" class="d-inline">
-                        <button name="edit-report" hidden="true" title="Редактировать отчёт" class="btn btn-info btn-detail btn-sm open_modal" data-toggle="tooltip" value="{{$user->id}}">
-                          <i class="fas fa-pencil-alt">
-                          </i>
-                          
-                        </button> --}}
                         </form>
                          <form
                          action="{{ route('reports.create', $user->id)}}" class="d-inline">
-                          <button name="create-report" title="Создать отчёт" class="btn btn-danger btn-detail btn-sm open_modal m-2" data-toggle="tooltip" value="{{$user->id}}">
+                          <button name="create-report" title="Создать отчёт" class="btn btn-danger btn-detail btn-sm m-2" data-toggle="tooltip" value="{{$user->id}}">
                             <i class="fas fa-calendar-plus">
                             </i>
                           </button>
                           </form>
                      @endif
                      @else
-                     {{-- <button name="check-report" hidden="true" title="Посмотреть отчёт" class="btn btn-info btn-detail btn-sm btn_add open_modal_report" data-toggle="tooltip" value="{{$user->reports->sortByDesc('created_at')->first()->id}}">
-                      <i class="fas fa-eye">
-                      </i>
-                  
-                    </button> --}}
-                    {{-- <form
-                    action="{{ route('list.edit', $user->reports->sortByDesc('created_at')->first()->id)}}" class="d-inline">
-                    <button name="edit-report" hidden="true" title="Редактировать отчёт" class="btn btn-info btn-detail btn-sm open_modal" data-toggle="tooltip" value="{{$user->id}}">
-                      <i class="fas fa-pencil-alt">
-                      </i>
-                      
-                    </button>
-                    </form> --}}
-                     {{-- <span class="text-dark">Не Сдан</span> --}}
                      <form
                           action="{{ route('reports.create', $user->id)}}" class="d-inline">
                           <button title="Создать отчёт" class="btn btn-danger btn-detail btn-sm open_modal" data-toggle="tooltip" value="{{$user->id}}">
@@ -101,11 +67,9 @@
                             </i>
                           </button>
                           </form>
-                        
                 @endif
                 </th>
                 <th class="project-actions  text-center">
-                    {{-- <form action="{{ route('verify.update', $verified['id']) }}" method="POST" --}}
                     <form action="{{ route('staff.list.index', $user->id) }}"
                         style="display: inline-block">
                         
@@ -159,7 +123,6 @@
     </form>
   </div>
   <div class="modal-footer">
-    {{-- <button type="button" class="btn btn-warning" id="btn-save" value="update">Сохранить изменения</button> --}}
     <input type="hidden" id="user_id" name="user_id" value="">
   </div>
 </div>

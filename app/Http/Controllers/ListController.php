@@ -66,7 +66,8 @@ class ListController extends Controller
     {
         //
         $report = Report::where('id',$id)->first();
-        return view('panel.home.report',compact('report'));
+        $user = User::find($report->user_id);
+        return view('panel.home.report',compact('report','user'));
     }
 
     /**
