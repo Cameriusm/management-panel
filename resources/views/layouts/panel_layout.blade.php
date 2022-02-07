@@ -50,22 +50,9 @@
 
     <!-- Sidebar -->
     <div class="sidebar">
-      {{-- <a href="http://localhost/management-panel/public/home">
-        <button type="button" class="btn btn-secondary btn-sm m-3 d-flex justify-content-center">Перейти к начальной странице</button></a> --}}
-      <!-- Sidebar user /panels (optional) -->
       <div class="user-/panels align-items-center justify-content-left ml-3 d-flex">
-        {{-- <div class="image w-25">
-          <img src="/panels/dist/img/user2-160x160.jpg" class="img-circle elevation-2 w-50" alt="User Image">
-        </div> --}}
         <div class="d-block info justify-content-center mt-3  d-flex flex-column text-light">
-          {{-- <a href="#" class="d-block">Alexander Pierce</a> --}}
           <a>Профиль: {{ Auth::user()->name }}</a>
-          {{-- <a>
-
-            {{\Request::route()->getName()}}
-
-          </a> --}}
-          {{-- <a href="#" class="d-block">Роль: {{ auth()->user()->roles->pluck('name')[0] ?? '' }}</a> --}}
           @switch ( auth()->user()->roles->pluck('name')[0])
             @case('admin')
               <a>Роль: Администратор</a>
@@ -79,14 +66,8 @@
             @default
               <a >Роль: ¯\_(ツ)_/¯</a>
           @endswitch
-          {{-- @if ( auth()->user()->roles->pluck('name')[0] ?? '' === 'admin' )
-          <a href="#" class="d-block">Роль: Администратор</a>
-          ...
-          @endif --}}
           <a>Дата:
             <div class="d-inline" id="livedate">
-            
-              {{-- {{ \Carbon\Carbon::now()->timezone('Asia/Krasnoyarsk')->format('H:i:s') }}  --}}
               {{ \Carbon\Carbon::now()->toDateString() }} 
              </div>
             
@@ -109,81 +90,60 @@
                with font-awesome or any other icon font library --><li class="nav-header">ГЛАВНОЕ МЕНЮ</li>
                <li class="nav-item ">
                 {{-- <a href="#" class="nav-link active"> --}}
-                  <a href="#" class="nav-link">
+                  <a href="/panel" class="nav-link">
                   <i class="nav-icon fas fa-tachometer-alt"></i>
                   <p>
                     Главная
-                    <i class="right fas fa-angle-left"></i>
                   </p>
                 </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Отчёты за сегодня</p>
-                    </a>
-                  </li>
-                </ul>
-                
-                  {{-- <li class="nav-item">
-                    <a href="./index3.html" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Сведения 3</p>  
-                    </a>
-                  </li>
-                </ul>
-              </li> --}}
-           
           <li class="nav-header">МЕНЕДЖМЕНТ</li>
           <li class="nav-item">
-            {{-- <a href="/panel/create" class="nav-link"> --}}
             <a href="{{ route('reports.create') }}" class="nav-link">
               <i class="nav-icon fas fa-columns"></i>
-              {{-- <i class="nav-icon fas fa-edit"></i> --}}
               <p>
                 Создать отчёт
               </p>
             </a>
           </li>
+          @if (Auth::user()->roles->pluck('name')[0] == ('admin') || Auth::user()->roles->pluck('name')[0] == ('manager'))
           <li class="nav-item">
-            {{-- <a href="/panel/create" class="nav-link"> --}}
             <a href="{{ route('staff.index') }}" class="nav-link">
               <i class="nav-icon fas fa-building"></i>
-              {{-- <i class="nav-icon fas fa-edit"></i> --}}
               <p>
                 Список сотрудников
               </p>
             </a>
           </li>
+          @endif
           <li class="nav-item">
             <a href="{{ route('reports.index') }}" class="nav-link">
               <i class="nav-icon far fa-calendar-alt"></i>
               <p>
                 Список отчётов
-                {{-- <span class="badge badge-info right">2</span> --}}
               </p>
             </a>
           </li>
+          @if (Auth::user()->roles->pluck('name')[0] == ('admin') || Auth::user()->roles->pluck('name')[0] == ('manager'))
           <li class="nav-item">
             <a href="{{route('verify.index')}}" class="nav-link">
-              {{-- <i class="nav-icon fas fa-columns"></i> --}}
               <i class="nav-icon fas fa-table"></i>
               <p>
                 Подтверждение
               </p>
             </a>
           </li>
+          @endif
+          @if (Auth::user()->roles->pluck('name')[0] == ('admin'))
           <li class="nav-header">АДМИНИСТРИРОВАНИЕ</li>
           <li class="nav-item">
             <a href="{{route('rights.index')}}" class="nav-link">
               <i class="nav-icon far fa-plus-square"></i>
-              {{-- <i class="nav-icon far fa-image"></i> --}}
               <p>
                 Изменение прав
               </p>
             </a>
           </li>
-         
+         @endif
          
           <li class="nav-header">ПРОФИЛЬ</li>
           <li class="nav-item">

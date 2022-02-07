@@ -7,7 +7,7 @@
       <h1>Список сотрудников</h1>
   </div>
     <div class="container text-center mt-5" style="max-width: 450px">
-      <label for="unsumbitted-dates" class="col-sm-6  control-label" >Фильтрация по отчётам</label>
+      <label for="unsumbitted-dates" class="col-sm-12  control-label" >Фильтрация по сдаче отчёта за определенный день</label>
       <input class="form-control" name="unsumbitted-dates" />
       <input id="start" name="start" type="hidden"/>
       <input id="end" name="end" type="hidden"/>
@@ -52,7 +52,7 @@
                          @else
                         </form>
                          <form
-                         action="{{ route('reports.create', $user->id)}}" class="d-inline">
+                         action="{{ route('reports.create.user', $user->id)}}" class="d-inline">
                           <button name="create-report" title="Создать отчёт" class="btn btn-danger btn-detail btn-sm m-2" data-toggle="tooltip" value="{{$user->id}}">
                             <i class="fas fa-calendar-plus">
                             </i>
@@ -62,7 +62,7 @@
                      @else
                      <form
                           action="{{ route('reports.create', $user->id)}}" class="d-inline">
-                          <button title="Создать отчёт" class="btn btn-danger btn-detail btn-sm open_modal" data-toggle="tooltip" value="{{$user->id}}">
+                          <button title="Создать отчёт" class="btn btn-danger btn-detail btn-sm" data-toggle="tooltip" value="{{$user->id}}">
                             <i class="fas fa-calendar-plus">
                             </i>
                           </button>

@@ -143,7 +143,7 @@
                         <th class="project-actions text-center ">
                           <form
                           action="{{ route('reports.create.user',$user->id) }}" class="d-inline">
-                          <button title="Создать отчёт" class="btn btn-danger btn-detail btn-sm open_modal" data-toggle="tooltip" value="{{$user->id}}">
+                          <button title="Создать отчёт" class="btn btn-danger btn-detail btn-sm" data-toggle="tooltip" value="{{$user->id}}">
                             <i class="fas fa-calendar-plus">
                             </i>
                           </button>

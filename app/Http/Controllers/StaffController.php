@@ -10,10 +10,10 @@ use Auth;
 use Illuminate\Support\Facades\DB;
 class StaffController extends Controller
 {
-    // public function __construct()
-    // {
-    //         $this->middleware(['role:manager|admin']);
-    // }
+    public function __construct()
+    {
+            $this->middleware(['role:manager|admin']);
+    }
 
     /**
      * Display a listing of the resource.
