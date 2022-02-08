@@ -20,7 +20,7 @@ class ReportController extends Controller
     {
         //
         $user_author_role = Auth::user()->roles()->first()->pivot->role_id;
-        $id = Auth::user()->roles()->first()->id;
+        $id = Auth::user()->id;
         $role_id = Auth::user()->roles()->first()->pivot->role_id;
         if ($role_id  == 2){
             $reports = Report::orderBy('created_at', 'desc')->where('user_id', $id)->get();
@@ -31,7 +31,6 @@ class ReportController extends Controller
             'reports' => $reports,
             'user_author_role' => $user_author_role
         ]);
-        
     }
     
     /**
@@ -44,10 +43,10 @@ class ReportController extends Controller
     {
         // return \Carbon\Carbon::now()->format('H');
         $user_author_role = Auth::user()->roles()->first()->pivot->role_id;
-        $user_author_id = Auth::id();
+        $user_author_id = Auth::user()->id;
         $user_role_id = null;
         if ($user_id == null) {
-            $user_id = Auth::id();
+            $user_id = Auth::user()->id;
             $user_id = User::find($user_id);
         } else {
             $user_id = User::find($user_id);
@@ -103,7 +102,11 @@ class ReportController extends Controller
     // public function show(Report $report, $id)
     public function show($id)
     {
-        //
+        $user_author_role = Auth::user()->roles()->first()->pivot->role_id;
+        $user_author_id = Auth::user()->id;
+        if ($user_author_role == 2 && $user_author_id == $id) {
+            return redirect()->back()->with('error', 'Работник может просматривать только свои отчёты!');
+        }
         $reportById = Report::where('id',$id)->first();
         return $reportById;
     }
@@ -118,8 +121,11 @@ class ReportController extends Controller
     {
         //
         $user_author_role = Auth::user()->roles()->first()->pivot->role_id;
-        $user_author_id = Auth::id();
+        $user_author_id = Auth::user()->id;
         $report = Report::where('id',$id)->first();
+        if ($user_author_role == 2 && $user_author_id != $report->user_id) {
+            return redirect()->back()->with('error', 'Работник может редактировать только свои отчёты!');
+        }
         $user = User::find($report->user_id);
         return view('panel.home.report',compact('report','user','user_author_role','user_author_id'));
     }
@@ -149,7 +155,7 @@ class ReportController extends Controller
         }
         $current = Report::where('id', $id)->first();
         $current->title = $request->title;
-        // add filter for manager/worker
+        // add filter for manager created_at
         //
         //
         //

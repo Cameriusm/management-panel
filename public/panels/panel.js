@@ -68,7 +68,7 @@ $(document).ready(function () {
                       <i class="fas fa-eye"> 
                       </i>
                     </button>
-                   <a href="list/${reportId}/edit">
+                   <a href="reports/${reportId}/edit">
                     <button name="edit-report" title="Редактировать отчёт" class=" d-inline btn btn-info btn-detail btn-sm m-2" data-toggle="tooltip">
                     <i class="fas fa-pencil-alt">
                     </i>
@@ -186,10 +186,15 @@ $(document).ready(function () {
             url: "http://localhost/panel/reports/" + report_id,
             dataType: "json",
             success: function (data) {
+                let d = new Date(data.created_at);
+                dformat =
+                    [d.toISOString().slice(0, 10)].join("-") +
+                    " " +
+                    [d.toLocaleTimeString("en-IT", { hour12: false })];
                 console.log(data);
                 $("#myModalLabel").html(`Отчёт номер ${data.id}`);
                 $("#title").val(data.title);
-                $("#date").val(data.created_at);
+                $("#date").val(dformat);
                 $("#desc").val(data.desc);
                 $("#myModal").modal("show");
             },
