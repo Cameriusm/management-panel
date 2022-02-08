@@ -11,6 +11,14 @@ use Illuminate\Support\Facades\DB;
 class HomeController extends Controller 
 {
     public function index() {
+      $currentUser = Auth::user()->roles()->first();
+      $user = User::with(['reports'])->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+      ->find($currentUser->id);
+      // return $user->reports;
+      if ($currentUser->pivot->role_id == 2) {
+        return view('panel.home.worker',compact('user'));
+      }
+
         $submitted = Report::whereDate('created_at', \Carbon\Carbon::now()->timezone('Asia/Krasnoyarsk')->toDateString())
           ->get('user_id');
         $userSubmitted = User::with(['reports'])->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')

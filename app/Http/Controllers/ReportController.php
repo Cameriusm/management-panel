@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Auth;
 use Redirect;
+use Carbon\Carbon;
 class ReportController extends Controller
 {
         
@@ -18,6 +19,7 @@ class ReportController extends Controller
     public function index()
     {
         //
+        $user_author_role = Auth::user()->roles()->first()->pivot->role_id;
         $id = Auth::user()->roles()->first()->id;
         $role_id = Auth::user()->roles()->first()->pivot->role_id;
         if ($role_id  == 2){
@@ -26,7 +28,8 @@ class ReportController extends Controller
             $reports = Report::orderBy('created_at', 'desc')->get();
         }
         return view('panel.home.reports', [
-            'reports' => $reports
+            'reports' => $reports,
+            'user_author_role' => $user_author_role
         ]);
         
     }
@@ -111,12 +114,14 @@ class ReportController extends Controller
      * @param  \App\Models\Report  $report
      * @return \Illuminate\Http\Response
      */
-    public function edit( $id)
+    public function edit($id)
     {
         //
+        $user_author_role = Auth::user()->roles()->first()->pivot->role_id;
+        $user_author_id = Auth::id();
         $report = Report::where('id',$id)->first();
         $user = User::find($report->user_id);
-        return view('panel.home.report',compact('report','user'));
+        return view('panel.home.report',compact('report','user','user_author_role','user_author_id'));
     }
 
     /**
@@ -128,10 +133,27 @@ class ReportController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        
+        //   
+        $role_id = Auth::user()->roles()->first()->pivot->role_id;
+        $hours = \Carbon\Carbon::now()->format('H');
+        $date = \Carbon\Carbon::now()->toDateString();
+        $reportDate = Carbon::parse($request->created_at)->toDateString();
+        if ($role_id == 2) {
+            if($reportDate != $date) {
+                return redirect()->back()->with('error', 'Редактирование отчёта для работника - c 7:00 до 20:00 в день создания отчёта!');
+            } else {
+                if (($role_id == 2) && ($hours >= 20 || $hours < 7) ) {
+                    return redirect()->back()->with('error', 'Время создания отчёта для работника - c 7:00 до 20:00!');
+                }
+            }
+        }
         $current = Report::where('id', $id)->first();
         $current->title = $request->title;
+        // add filter for manager/worker
+        //
+        //
+        //
+        //
         $current->created_at = $request->created_at;
         $current->desc = $request->desc;
         $current->save();

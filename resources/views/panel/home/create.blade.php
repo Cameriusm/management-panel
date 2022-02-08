@@ -4,14 +4,14 @@
 @section('content')
 
     @if (session('success'))
-                <div class="alert alert-danger" role="alert">
+                <div class="alert alert-success" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                     <h4><i class="icon fa fa-check"></i>{{ session('success') }}</h4>
                 </div>
     @elseif(session('error'))
     <div class="alert alert-danger" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-        <h4><i class="icon fa fa-check"></i>{{ session('error') }}</h4>
+        <h4><i class="icon fa fa-times-circle"></i>{{ session('error') }}</h4>
     </div>
             @endif
     <div class="container">

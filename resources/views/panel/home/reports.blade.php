@@ -7,20 +7,18 @@
       <div class=" text-center pt-5 ">
       <h1>Список отчётов</h1>
     </div>
-    <form action="{{ route('pdfview',['download'=>'pdf']) }}">
-  <div class="container mt-5" style="max-width: 450px">
-    <input class="form-control" name="dates" />
-    <input id="start" name="start" type="hidden"/>
-    <input id="end" name="end" type="hidden"/>
-  </div>
-  <div class="mt-3 d-flex justify-content-center">
-    <button class="btn btn-danger btn-sm" type="submit">Download PDF</button>
-  </div>
-</form>
-
-
-{{-- <div class="text-center"> <input type="submit" class="btn btn-info btn-send pt-2 btn-block " value="Скачать PDF"> </div> --}}
-
+    @if ($user_author_role != 2) 
+      <form action="{{ route('pdfview',['download'=>'pdf']) }}">
+    <div class="container mt-5" style="max-width: 450px">
+      <input class="form-control" name="dates" />
+      <input id="start" name="start" type="hidden"/>
+      <input id="end" name="end" type="hidden"/>
+    </div>
+    <div class="mt-3 d-flex justify-content-center">
+      <button class="btn btn-danger btn-sm" type="submit">Download PDF</button>
+    </div>
+  </form>
+    @endif
   <div class="align-items-center mt-2  m-3 d-flex justify-content-center ">
     <div class="table-responsive w-75">
         <table class="table table-striped table-hover table-condensed">
@@ -45,7 +43,6 @@
               <th class="project-actions text-right d-flex justify-content-center">
                 <button class="btn btn-info btn-sm btn_add open_modal_report" value={{$report->id}}>
                   <i class="far fa-eye"></i>
-         
                 </button>
                 <form action="{{ route('reports.edit', $report->id) }}">
                   <button class="btn btn-warning btn-sm ml-3 mr-3" >
@@ -55,19 +52,14 @@
                 </form>
                 <button class="btn btn-danger btn-sm" >
                  <i class="fas fa-trash"></i>
-                 
                 </button>
               </th>
-              
             </tr>    
             @endforeach
           </tbody>
         </table>
       </div>
-      </div> <!-- /.row-->
-
-
-
+      </div>
 
       <input id="url" type="hidden" value="{{ \Request::url() }}">
       <!-- MODAL SECTION -->
@@ -102,7 +94,6 @@
         </form>
       </div>
       <div class="modal-footer">
-        {{-- <button type="button" class="btn btn-primary" id="btn-save" value="update">Сохранить изменения</button> --}}
         <input type="hidden" id="user_id" name="user_id" value="">
       </div>
     </div>
