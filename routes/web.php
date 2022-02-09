@@ -25,18 +25,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-
 Route::middleware(['role:worker|manager|admin'])->prefix('panel')->group(function () {
-   
-    
     Route::get('/', [App\Http\Controllers\Panel\HomeController::class, 'index']);
     Route::group(['middleware' => ['role:manager|admin']], function () {
         Route::get('reports/create/{id}',[ReportController::class, 'create'])->name('reports.create.user');
-        Route::resource('staff', StaffController::class);
-        Route::resource('staff.list', ListController::class);
-        Route::resource('list', ListController::class);
+        Route::get('staff', [StaffController::class, 'index'])->name('staff');
+        Route::get('staff/list/{id}', [ListController::class, 'index'])->name('staff.list');
         Route::resource('rights', RightController::class);
         Route::resource('verify', VerifyController::class);
         Route::get('pdfview',[DownloadController::class,'index'])->name('pdfview');

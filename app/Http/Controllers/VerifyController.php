@@ -20,10 +20,8 @@ class VerifyController extends Controller
     public function index()
     {
         //
-        $verifieds = User::join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')->where('role_Id','1')->get();
-        return view('panel.home.verify', [
-            'verifieds' => $verifieds
-        ]);
+        $verified = User::join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')->where('role_Id','1')->get();
+        return view('panel.home.verify', compact('verified'));
     }
 
     /**

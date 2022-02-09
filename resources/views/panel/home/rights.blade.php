@@ -3,11 +3,8 @@
 @section('title', 'Изменение прав')
 @section('content')
 
-    <!-- Content Header (Page header) -->
 
-    <!-- /.content-header -->
-
-    <!-- Main content -->
+<section class="content">
     <div class="container">
       <div class=" text-center pt-5 ">
       <h1>Изменение прав пользователей</h1>
@@ -54,19 +51,8 @@
                     </i>
                     Редактировать
                   </button>
-                  {{-- <form action="#" method="POST"
-                      style="display: inline-block">
-                      @csrf
-                      @method('DELETE')
-                      <button type="submit" class="btn btn-danger btn-sm delete-btn">
-                          <i class="fas fa-trash">
-                          </i>
-                          Удалить
-                      </button>
-                  </form> --}}
               </td>
               </tr>
-                  
               @endforeach
 
               <!-- Passing BASE URL to AJAX -->
@@ -97,11 +83,11 @@
                           <label for="inputDetail" class="col-sm-3 control-label">Роль</label>
                           <div class="col-sm-9">
                             <select  class="form-control" id="role" name="role" placeholder="Роль" >
-                                        <option value="1">Гость</option>
-                                        <option value='2'>Рабочий</option>
-                                        <option value="3">Менеджер</option>
-                                        <option value="4">Администратор</option>
-                                      </select>
+                              <option value="1">Гость</option>
+                              <option value='2'>Рабочий</option>
+                              <option value="3">Менеджер</option>
+                              <option value="4">Администратор</option>
+                            </select>
                           </div>
                         </div>
                       </form>
@@ -116,11 +102,8 @@
             </tbody>
           </table>
         </div>
-        </div> <!-- /.row-->
-    </div>
-  </div><!-- /.container-fluid -->
+      </div> <!-- /.row-->
+  </div>
+</section>
 
-    <!-- /.content -->
-
-  <!-- /.content-wrapper -->
-  @endsection
+@endsection

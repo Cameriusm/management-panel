@@ -19,18 +19,15 @@ class ReportController extends Controller
     public function index()
     {
         //
-        $user_author_role = Auth::user()->roles()->first()->pivot->role_id;
-        $id = Auth::user()->id;
-        $role_id = Auth::user()->roles()->first()->pivot->role_id;
-        if ($role_id  == 2){
+        $author = Auth::user();
+        $author_role = $author->roles()->first()->pivot->role_id;
+        $id = $author->id;
+        if ($author_role  == 2){
             $reports = Report::orderBy('created_at', 'desc')->where('user_id', $id)->get();
         } else {
             $reports = Report::orderBy('created_at', 'desc')->get();
         }
-        return view('panel.home.reports', [
-            'reports' => $reports,
-            'user_author_role' => $user_author_role
-        ]);
+        return view('panel.home.reports', compact('reports','author_role'));
     }
     
     /**
@@ -39,20 +36,18 @@ class ReportController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create($user_id = null)
+    public function create($id = null)
     {
-        // return \Carbon\Carbon::now()->format('H');
-        $user_author_role = Auth::user()->roles()->first()->pivot->role_id;
-        $user_author_id = Auth::user()->id;
-        $user_role_id = null;
-        if ($user_id == null) {
-            $user_id = Auth::user()->id;
-            $user_id = User::find($user_id);
+        $author = Auth::user();
+        $author_id = $author->id;
+        $author_role = $author->roles()->first()->pivot->role_id;
+        if ($id == null) {
+            $id = User::find($author_id);
         } else {
-            $user_id = User::find($user_id);
+            $id = User::find($id);
         }
-        $user = $user_id;
-        return view('panel.home.create',compact('user','user_author_role','user_role_id','user_author_id'));
+        $user = $id;
+        return view('panel.home.create',compact('user','author_role','author_id'));
     }
     
     /**
@@ -102,9 +97,10 @@ class ReportController extends Controller
     // public function show(Report $report, $id)
     public function show($id)
     {
-        $user_author_role = Auth::user()->roles()->first()->pivot->role_id;
-        $user_author_id = Auth::user()->id;
-        if ($user_author_role == 2 && $user_author_id == $id) {
+        $author = Auth::user();
+        $author_role = $author->roles()->first()->pivot->role_id;
+        $author_id = $author->id;
+        if ($author_role == 2 && $author_id == $id) {
             return redirect()->back()->with('error', 'Работник может просматривать только свои отчёты!');
         }
         $reportById = Report::where('id',$id)->first();
@@ -119,15 +115,15 @@ class ReportController extends Controller
      */
     public function edit($id)
     {
-        //
-        $user_author_role = Auth::user()->roles()->first()->pivot->role_id;
-        $user_author_id = Auth::user()->id;
+        $author = Auth::user();
+        $author_role = $author->roles()->first()->pivot->role_id;
+        $author_id = $author->id;
         $report = Report::where('id',$id)->first();
-        if ($user_author_role == 2 && $user_author_id != $report->user_id) {
+        if ($author_role == 2 && $author_id != $report->user_id) {
             return redirect()->back()->with('error', 'Работник может редактировать только свои отчёты!');
         }
         $user = User::find($report->user_id);
-        return view('panel.home.report',compact('report','user','user_author_role','user_author_id'));
+        return view('panel.home.report',compact('report','user','author_role','author_id'));
     }
 
     /**
@@ -139,8 +135,8 @@ class ReportController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //   
-        $role_id = Auth::user()->roles()->first()->pivot->role_id;
+        $author = Auth::user();
+        $role_id = $author->roles()->first()->pivot->role_id;
         $hours = \Carbon\Carbon::now()->format('H');
         $date = \Carbon\Carbon::now()->toDateString();
         $reportDate = Carbon::parse($request->created_at)->toDateString();
@@ -153,14 +149,15 @@ class ReportController extends Controller
                 }
             }
         }
+        $user_id = Report::find($id)->user_id;
+        $author_id = $author->id;
         $current = Report::where('id', $id)->first();
+        if ($role_id == 3 && $author_id == $user_id ) {
+            $current->created_at = $current->created_at;
+        } else {
+            $current->created_at = $request->created_at;
+        }
         $current->title = $request->title;
-        // add filter for manager created_at
-        //
-        //
-        //
-        //
-        $current->created_at = $request->created_at;
         $current->desc = $request->desc;
         $current->save();
         return redirect()->back()->withSuccess('Отчёт был успешно отредактирован!');

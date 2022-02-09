@@ -3,17 +3,7 @@
 @section('title', 'Подтверждение')
 @section('content')
 
-    <!-- Content Header (Page header) -->
-
-    <!-- /.content-header -->
-
-    <!-- Main content -->
-    @if (session('success'))
-                <div class="alert alert-success" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <h4><i class="icon fa fa-check"></i>{{ session('success') }}</h4>
-                </div>
-            @endif
+<section class="content">
     <div class="container">
       <div class=" text-center pt-5 ">
       <h1>Подтверждение пользователей</h1>
@@ -31,14 +21,14 @@
               </tr>
             </thead>
             <tbody>
-              @foreach ($verifieds as $verified)
+              @foreach ($verified as $user)
               <tr>
-                <th class="text-center">{{$verified->id}}</th>
-                <th class="text-center">{{$verified->name}}</th>
-                <th class="text-center">{{$verified->email}}</th>
-                <th class="text-center">{{$verified->created_at}}</th>
+                <th class="text-center">{{$user->id}}</th>
+                <th class="text-center">{{$user->name}}</th>
+                <th class="text-center">{{$user->email}}</th>
+                <th class="text-center">{{$user->created_at}}</th>
                 <td class="project-actions text-center">
-                  <form action="{{ route('verify.update', $verified['id']) }}" method="POST"
+                  <form action="{{ route('verify.update', $user['id']) }}" method="POST"
                       style="display: inline-block">
                       @csrf
                       @method('PUT')
@@ -58,8 +48,5 @@
     </div>
   </div>
 </div><!-- /.container-fluid -->
-
-    <!-- /.content -->
-
-  <!-- /.content-wrapper -->
+</section>
 @endsection

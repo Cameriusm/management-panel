@@ -5,12 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Панель - @yield('title')</title>
   <meta name="csrf-token" content="{{ csrf_token() }}" />
-  {{-- <link rel="icon" href="{{ asset('/favicon.ico') }}"> --}}
+
   <link rel="shortcut icon" href="{{ asset('/favicon.ico') }}"  type='image/x-icon'>
 
-  {{-- <link rel="icon" href="{{ asset('/favicon.ico') }}"> --}}
-  <!-- Google Font: Source Sans Pro -->
-  
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="/panels/plugins/fontawesome-free/css/all.min.css">
@@ -39,154 +36,155 @@
     <img class="animation__shake" src="/panels/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
   </div> --}}
 
-
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="/panel" class="brand-link">
-      <img src="/panels/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">Панель Отчётов</span>
-    </a>
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <!-- Brand Logo -->
+  <a href="/panel" class="brand-link">
+    <img src="/panels/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+    <span class="brand-text font-weight-light">Панель Отчётов</span>
+  </a>
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <div class="user-/panels align-items-center justify-content-left ml-3 d-flex">
-        <div class="d-block info justify-content-center mt-3  d-flex flex-column text-light">
-          <a>Профиль: {{ Auth::user()->name }}</a>
-          @switch ( auth()->user()->roles->pluck('name')[0])
-            @case('admin')
-              <a>Роль: Администратор</a>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="user-/panels align-items-center justify-content-left ml-3 d-flex">
+      <div class="d-block info justify-content-center mt-3  d-flex flex-column text-light">
+        <!-- Request user information -->
+        <a>Профиль: {{ Auth::user()->name }}</a>
+        @switch ( auth()->user()->roles->pluck('name')[0])
+          @case('admin')
+            <a>Роль: Администратор</a>
+          @break
+          @case('manager')
+            <a>Роль: Менеджер</a>
+          @break
+          @case('worker')
+            <a>Роль: Рабочий</a>
             @break
-            @case('manager')
-              <a>Роль: Менеджер</a>
-            @break
-            @case('worker')
-              <a>Роль: Рабочий</a>
-              @break
-            @default
-              <a >Роль: ¯\_(ツ)_/¯</a>
-          @endswitch
-          <a>Дата:
-            <div class="d-inline" id="livedate">
-              {{ \Carbon\Carbon::now()->toDateString() }} 
-             </div>
-            
-          </a>
-          <a id="">Время:  <div class="d-inline" id="livetime">
-            
-           {{ \Carbon\Carbon::now()->timezone('Asia/Krasnoyarsk')->format('H:i:s') }} 
-          </div>
-          </a>
+          @default
+            <a >Роль: ¯\_(ツ)_/¯</a>
+        @endswitch
+          <!-- Show current date and time -->
+        <a>Дата:
+          <div class="d-inline" id="livedate">
+            {{ \Carbon\Carbon::now()->toDateString() }} 
+            </div>
+        </a>
+        <a id="">Время:  
+          <div class="d-inline" id="livetime">
+          {{ \Carbon\Carbon::now()->toTimestring() }} 
         </div>
+        </a>
       </div>
-      <div class="d-block ml-3  d-flex flex-column text-light">
     </div>
+    <div class="d-block ml-3  d-flex flex-column text-light">
+  </div>
+    <!-- Sidebar Menu -->
+    <nav class="mt-2  ">
+      
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <li class="nav-header">ГЛАВНОЕ МЕНЮ</li>
+              <li class="nav-item ">
+                <a href="/panel" class="nav-link">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Главная
+                </p>
+              </a>
+        <li class="nav-header">МЕНЕДЖМЕНТ</li>
+        <li class="nav-item">
+          <a href="{{ route('reports.create') }}" class="nav-link">
+            <i class="nav-icon fas fa-columns"></i>
+            <p>
+              Создать отчёт
+            </p>
+          </a>
+        </li>
+        <!-- Check user role to show/hide UI accordingly -->
+        @if (Auth::user()->roles->pluck('name')[0] == ('admin') || Auth::user()->roles->pluck('name')[0] == ('manager'))
+        <li class="nav-item">
+          <a href="{{ route('staff') }}" class="nav-link">
+            <i class="nav-icon fas fa-building"></i>
+            <p>
+              Список сотрудников
+            </p>
+          </a>
+        </li>
+        @endif
+        <li class="nav-item">
+          <a href="{{ route('reports.index') }}" class="nav-link">
+            <i class="nav-icon far fa-calendar-alt"></i>
+            <p>
+              Список отчётов
+            </p>
+          </a>
+        </li>
+        @if (Auth::user()->roles->pluck('name')[0] == ('admin') || Auth::user()->roles->pluck('name')[0] == ('manager'))
+        <li class="nav-item">
+          <a href="{{route('verify.index')}}" class="nav-link">
+            <i class="nav-icon fas fa-table"></i>
+            <p>
+              Подтверждение
+            </p>
+          </a>
+        </li>
+        @endif
+        @if (Auth::user()->roles->pluck('name')[0] == ('admin'))
+        <li class="nav-header">АДМИНИСТРИРОВАНИЕ</li>
+        <li class="nav-item">
+          <a href="{{route('rights.index')}}" class="nav-link">
+            <i class="nav-icon far fa-plus-square"></i>
+            <p>
+              Изменение прав
+            </p>
+          </a>
+        </li>
+        @endif
+        <li class="nav-header">ПРОФИЛЬ</li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon far fa-circle text-danger"></i>
+            <p class="text">Настройки</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon far fa-circle text-warning"></i>
+            <p>Смена данных</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/" class="nav-link">
+            <i class="nav-icon far fa-circle text-info"></i>
+            <p>Выйти</p>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+  </div>
+  <!-- /.sidebar -->
+</aside>
 
-      <!-- Sidebar Menu -->
-      <nav class="mt-2  ">
-        
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library --><li class="nav-header">ГЛАВНОЕ МЕНЮ</li>
-               <li class="nav-item ">
-                {{-- <a href="#" class="nav-link active"> --}}
-                  <a href="/panel" class="nav-link">
-                  <i class="nav-icon fas fa-tachometer-alt"></i>
-                  <p>
-                    Главная
-                  </p>
-                </a>
-          <li class="nav-header">МЕНЕДЖМЕНТ</li>
-          <li class="nav-item">
-            <a href="{{ route('reports.create') }}" class="nav-link">
-              <i class="nav-icon fas fa-columns"></i>
-              <p>
-                Создать отчёт
-              </p>
-            </a>
-          </li>
-          @if (Auth::user()->roles->pluck('name')[0] == ('admin') || Auth::user()->roles->pluck('name')[0] == ('manager'))
-          <li class="nav-item">
-            <a href="{{ route('staff.index') }}" class="nav-link">
-              <i class="nav-icon fas fa-building"></i>
-              <p>
-                Список сотрудников
-              </p>
-            </a>
-          </li>
-          @endif
-          <li class="nav-item">
-            <a href="{{ route('reports.index') }}" class="nav-link">
-              <i class="nav-icon far fa-calendar-alt"></i>
-              <p>
-                Список отчётов
-              </p>
-            </a>
-          </li>
-          @if (Auth::user()->roles->pluck('name')[0] == ('admin') || Auth::user()->roles->pluck('name')[0] == ('manager'))
-          <li class="nav-item">
-            <a href="{{route('verify.index')}}" class="nav-link">
-              <i class="nav-icon fas fa-table"></i>
-              <p>
-                Подтверждение
-              </p>
-            </a>
-          </li>
-          @endif
-          @if (Auth::user()->roles->pluck('name')[0] == ('admin'))
-          <li class="nav-header">АДМИНИСТРИРОВАНИЕ</li>
-          <li class="nav-item">
-            <a href="{{route('rights.index')}}" class="nav-link">
-              <i class="nav-icon far fa-plus-square"></i>
-              <p>
-                Изменение прав
-              </p>
-            </a>
-          </li>
-         @endif
-         
-          <li class="nav-header">ПРОФИЛЬ</li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon far fa-circle text-danger"></i>
-              <p class="text">Настройки</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon far fa-circle text-warning"></i>
-              <p>Смена данных</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/" class="nav-link">
-              <i class="nav-icon far fa-circle text-info"></i>
-              <p>Выйти</p>
-              
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-  </aside>
-
-  <!-- Content Wrapper. Contains page content -->
+<!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+    @if (session('success'))
+        <div class="alert alert-success" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-check"></i>{{ session('success') }}</h4>
+        </div>
+    @elseif(session('error'))
+    <div class="alert alert-danger" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h4><i class="icon fa fa-times-circle"></i>{{ session('error') }}</h4>
+    </div>
+            @endif
     @yield('content')
   </div>
-
-
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
 
 <script type="text/javascript">
+  // Updates liveTime on sidebar
   function showTime() {
     function addZero(i) {
       if (i < 10) {i = "0" + i}

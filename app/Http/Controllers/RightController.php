@@ -9,9 +9,9 @@ use Auth;
 class RightController extends Controller
 {
 
-        public function __construct()
+    public function __construct()
     {
-            $this->middleware(['role:manager|admin']);
+        $this->middleware(['role:admin']);
     }
 
     /**
@@ -21,14 +21,8 @@ class RightController extends Controller
      */
     public function index()
     {
-        //
-        // $ModelHasRoles = new ModelHasRoles;
         $rights = User::join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')->orderBy('id', 'desc')->get();
-        // return view($rights);
-        return view('panel.home.rights', [
-            'rights' => $rights,
-            // 'ModelHasRoles' => $ModelHasRoles
-        ]);
+        return view('panel.home.rights', compact('rights'));
     }
 
     /**
@@ -63,8 +57,6 @@ class RightController extends Controller
         $rights = User::find($id);
         $rights->role_id = $rights->roles->pluck('id');
         return response()->json($rights);
-    //   $test = Test::whereSlug($slug)->firstOrFail();
-    //   return view('panel.home.show', compact('test'));
     }
     
 
@@ -88,16 +80,8 @@ class RightController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // $product = Product::find($product_id);
-        // $product->name = $request->name;
-        // $product->price = $request->price;
-        // $product->save();
-        // return response()->json($product);
-        // \Log::info($id);
         $role = ModelHasRole::where('model_id', $id)->first(); 
         $role->role_id = $request->role_id;
-        // return $role;
-        // $role->id = $request->id;
         $role->save();
         return response()->json($role);
     }
