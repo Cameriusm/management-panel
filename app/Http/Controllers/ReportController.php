@@ -152,7 +152,7 @@ class ReportController extends Controller
         $user_id = Report::find($id)->user_id;
         $author_id = $author->id;
         $current = Report::where('id', $id)->first();
-        if ($role_id == 3 && $author_id == $user_id ) {
+        if ($role_id == 2 || ($role_id == 3 && $author_id == $user_id) ) {
             $current->created_at = $current->created_at;
         } else {
             $current->created_at = $request->created_at;
