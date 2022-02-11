@@ -29,6 +29,9 @@
         </thead>
           <tbody>
               @foreach ($users as $user)
+              @if ($user->role_id == 1)
+                  @continue
+              @endif
               <tr class="staff-row text-center">
                 <th class="staff-id">{{$user->id}}</th>
                 <th>{{$user->name}}</th>

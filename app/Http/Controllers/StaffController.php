@@ -12,8 +12,8 @@ class StaffController extends Controller
 {
     public function index(Request $request)
     {
-        $users = User::with(['reports']);
-        $users = $users->get();
+        $users = User::with(['reports'])->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id');
+        $users = $users->orderBy('id', 'ASC')->get();
         return view('panel.home.staff',[
             'users'=>$users,
         ]);
