@@ -17,7 +17,7 @@
           <div class="icon">
             <i class="far fa-calendar-plus"></i>
           </div>
-          <a href="#" class="small-box-footer">Подробнее <i class="fas fa-arrow-circle-right"></i></a>
+          <a href="{{ route('reports.index') }}"  class="small-box-footer">Список отчётов</a>
         </div>
         <div class="align-items-center mt-5 m-3 d-flex justify-content-center ">
           <div class="table-responsive w-100">
@@ -93,7 +93,7 @@
           <div class="icon">
             <i class="far fa-calendar-minus"></i>
           </div>
-          <a href="#" class="small-box-footer">Подробнее <i class="fas fa-arrow-circle-right"></i></a>
+          <a href="{{ route('staff') }}" class="small-box-footer">Список сотрудников</a>
         </div>
         <div class="align-items-center mt-5 m-3 d-flex justify-content-center ">
           <div class="table-responsive w-100">
@@ -109,6 +109,9 @@
                 </thead>
                 <tbody>
                   @foreach ($userUnsubmitted as $user)
+                    @if ($user->role_id == 1)
+                     @continue
+                   @endif
                   <tr ">
                     <th class="text-center">{{$user->id}}</th>
                     <th class="text-center">{{$user->name}}</th>

@@ -40,8 +40,8 @@
             <th>{{$report->id}}</th>
             <th class="report-date">{{$report->created_at->toDateString()}}</th>
             <th>{{Auth::user()->where('id', $report->user_id)->value('name')}}</th>
-            <th>{{$report->title}}</th>
-            <th>{{$report->desc}}</th>
+            <th class="text-center">{{ \Illuminate\Support\Str::limit($report->title, 20, $end='...') }}</th>
+            <th class="text-center">{{ \Illuminate\Support\Str::limit($report->desc, 50, $end='...') }}</th>
             <th class="project-actions text-right d-flex justify-content-center">
               <button class="btn btn-info btn-sm btn_add open_modal_report" value={{$report->id}}>
                 <i class="far fa-eye"></i>
@@ -52,9 +52,15 @@
                   </i>
                 </button>
               </form>
+              @if (Auth::user()->roles->pluck('name')[0] != ('worker'))
+              <form action="{{ route('reports.destroy', $report->id) }}" method="POST">
+                @method('DELETE')
+                @csrf
               <button class="btn btn-danger btn-sm" >
                 <i class="fas fa-trash"></i>
               </button>
+            </form>
+              @endif
             </th>
           </tr>    
           @endforeach

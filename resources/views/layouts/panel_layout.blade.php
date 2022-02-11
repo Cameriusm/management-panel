@@ -80,8 +80,8 @@
   </div>
     <!-- Sidebar Menu -->
     <nav class="mt-2  ">
-      
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        @if (Auth::user()->roles->pluck('name')[0] != ('worker'))
         <li class="nav-header">ГЛАВНОЕ МЕНЮ</li>
               <li class="nav-item ">
                 <a href="/panel" class="nav-link">
@@ -90,6 +90,7 @@
                   Главная
                 </p>
               </a>
+        @endif
         <li class="nav-header">МЕНЕДЖМЕНТ</li>
         <li class="nav-item">
           <a href="{{ route('reports.create') }}" class="nav-link">
@@ -153,10 +154,15 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="/" class="nav-link">
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+              @csrf
+            </form>
+            <a class="nav-link" href="{{ route('logout') }}"
+            onclick="event.preventDefault();
+                             document.getElementById('logout-form').submit();">
             <i class="nav-icon far fa-circle text-info"></i>
-            <p>Выйти</p>
-          </a>
+                Выйти
+              </a>
         </li>
       </ul>
     </nav>

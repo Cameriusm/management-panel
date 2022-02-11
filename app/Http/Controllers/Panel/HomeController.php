@@ -13,9 +13,7 @@ class HomeController extends Controller
     public function index() {
         $user_role = Auth::user()->roles()->first()->pivot->role_id;
         if ($user_role == 2) {
-          $user = User::with(['reports'])->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
-          ->find(Auth::user()->id);
-          return view('panel.home.worker',compact('user'));
+          return redirect()->route('reports.create');
         }
 
         $submitted = Report::whereDate('created_at', \Carbon\Carbon::now()->toDateString())

@@ -19,11 +19,9 @@ use App\Http\Controllers\ListController;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
 
 Auth::routes();
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
 
 Route::middleware(['role:worker|manager|admin'])->prefix('panel')->group(function () {
     Route::get('/', [App\Http\Controllers\Panel\HomeController::class, 'index']);

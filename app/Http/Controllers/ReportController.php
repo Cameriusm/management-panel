@@ -100,7 +100,7 @@ class ReportController extends Controller
         $author = Auth::user();
         $author_role = $author->roles()->first()->pivot->role_id;
         $author_id = $author->id;
-        if ($author_role == 2 && $author_id == $id) {
+        if ($author_role == 2 && $author_id != $id) {
             return redirect()->back()->with('error', 'Работник может просматривать только свои отчёты!');
         }
         $reportById = Report::where('id',$id)->first();
@@ -169,8 +169,16 @@ class ReportController extends Controller
      * @param  \App\Models\Report  $report
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Report $report)
+    public function destroy( $id)
     {
-        //
+        $author = Auth::user();
+        $author_role = $author->roles()->first()->pivot->role_id;
+        $author_id = $author->id;
+        $report = Report::find($id);
+        if ($author_role == 2) {
+            return redirect()->back()->with('error', 'Работник не может удалять отчёты!');
+        }
+        $report->delete();
+        return redirect()->back()->withSuccess('Отчёт был успешно удалён!');
     }
 }
