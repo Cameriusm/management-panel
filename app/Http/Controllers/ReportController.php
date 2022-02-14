@@ -63,6 +63,15 @@ class ReportController extends Controller
         if (($role_id == 2) && ($time >= 20 || $time < 7) ) {
             return redirect()->back()->with('error', 'Время создания отчёта для работника - c 7:00 до 20:00');
         }
+        // Check if report for today's date exists
+        // return 'foo';
+
+        $author_id = Auth::user()->id;
+        $current_report = Report::where('user_id',$author_id)->orderBy('created_at', 'DESC')->first()->created_at->toDateString();
+        if ($current_report == \Carbon\Carbon::now()->toDateString()){
+            return redirect()->back()->with('error', 'Отчёт за сегодняшний день уже существует');
+        }
+        // return $current_report;
         $new_report = new Report();
         switch($role_id){
             case(2):

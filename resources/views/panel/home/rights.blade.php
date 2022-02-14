@@ -9,7 +9,7 @@
       <div class=" text-center pt-5 ">
       <h1>Изменение прав пользователей</h1>
     </div>
-    <div class="align-items-center mt-5 m-3 d-flex justify-content-center ">
+    <div class="align-items-center mt-5 d-flex justify-content-center ">
       <div class="table-responsive w-75">
           <table class="table table-striped table-hover table-condensed">
             <thead>
@@ -23,6 +23,10 @@
             </thead>
             <tbody>
               @foreach ($rights as $right)
+              @if ($right->id == Auth::user()->id)
+                @continue;
+              @endif
+
               <tr ">
                 <th class="text-center">{{$right->id}}</th>
                 <th class="text-center">{{$right->name}}</th>
@@ -56,54 +60,53 @@
               @endforeach
 
               <!-- Passing BASE URL to AJAX -->
-              <input id="url" type="hidden" value="{{ \Request::url() }}">
-                    <!-- MODAL SECTION -->
-              <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h4 class="modal-title" id="myModalLabel">Изменение прав</h4>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    </div>
-                    <div class="modal-body">
-                      <form id="frmProducts" name="frmProducts" class="form-horizontal" novalidate="">
-                        <div class="form-group error">
-                          <label for="inputName" class="col-sm-3 control-label" >Имя</label>
-                          <div class="col-sm-9">
-                            <input readonly type="text" class="form-control has-error" id="name" name="name" placeholder="Product Name" value="">
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label for="inputDetail" class="col-sm-3 control-label">Почта</label>
-                          <div class="col-sm-9">
-                            <input readonly type="email" class="form-control" id="email" name="email" placeholder="Email" value="">
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label for="inputDetail" class="col-sm-3 control-label">Роль</label>
-                          <div class="col-sm-9">
-                            <select  class="form-control" id="role" name="role" placeholder="Роль" >
-                              <option value="1">Гость</option>
-                              <option value='2'>Рабочий</option>
-                              <option value="3">Менеджер</option>
-                              <option value="4">Администратор</option>
-                            </select>
-                          </div>
-                        </div>
-                      </form>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-primary" id="btn-save" value="update">Сохранить изменения</button>
-                      <input type="hidden" id="user_id" name="user_id" value="">
-                    </div>
-                  </div>
-                </div>
-              </div>
             </tbody>
           </table>
         </div>
       </div> <!-- /.row-->
-  </div>
-</section>
-
+    </section>
+    
+    <input id="url" type="hidden" value="{{ \Request::url() }}">
+          <!-- MODAL SECTION -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="myModalLabel">Изменение прав</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          </div>
+          <div class="modal-body">
+            <form id="frmProducts" name="frmProducts" class="form-horizontal" novalidate="">
+              <div class="form-group error">
+                <label for="inputName" class="col-sm-3 control-label" >Имя</label>
+                <div class="col-sm-9">
+                  <input readonly type="text" class="form-control has-error" id="name" name="name" placeholder="Product Name" value="">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputDetail" class="col-sm-3 control-label">Почта</label>
+                <div class="col-sm-9">
+                  <input readonly type="email" class="form-control" id="email" name="email" placeholder="Email" value="">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputDetail" class="col-sm-3 control-label">Роль</label>
+                <div class="col-sm-9">
+                  <select  class="form-control" id="role" name="role" placeholder="Роль" >
+                    <option value="1">Гость</option>
+                    <option value='2'>Рабочий</option>
+                    <option value="3">Менеджер</option>
+                    <option value="4">Администратор</option>
+                  </select>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="btn-save" value="update">Сохранить изменения</button>
+            <input type="hidden" id="user_id" name="user_id" value="">
+          </div>
+        </div>
+      </div>
+    </div>
 @endsection
