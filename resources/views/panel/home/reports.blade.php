@@ -29,7 +29,6 @@
             <th class="text-center"><strong>№</strong></th>
             <th class="text-center"><strong>Дата</strong></th>
             <th class="text-center"><strong>Автор</strong></th>
-            <th class="text-center"><strong>Название</strong></th>
             <th class="text-center"><strong>Кратк.содержание</strong></th>
             <th class="text-center"><strong>Действия</strong></th>
           </tr>
@@ -40,7 +39,6 @@
             <th>{{$report->id}}</th>
             <th class="report-date">{{$report->created_at->toDateString()}}</th>
             <th>{{Auth::user()->where('id', $report->user_id)->value('name')}}</th>
-            <th class="text-center">{{ \Illuminate\Support\Str::limit($report->title, 20, $end='...') }}</th>
             <th class="text-center">{{ \Illuminate\Support\Str::limit($report->desc, 50, $end='...') }}</th>
             <th class="project-actions text-right d-flex justify-content-center">
               <button class="btn btn-info btn-sm btn_add open_modal_report" value={{$report->id}}>

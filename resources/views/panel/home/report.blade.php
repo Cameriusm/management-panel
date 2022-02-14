@@ -22,11 +22,6 @@
                                         <div class="form-group"> <label for="form_name">Автор *</label> <input readonly id="form_name" type="text" name="title" class="form-control" placeholder="Пожалуйства введите название *" required="required" data-error="Авторство обязательно." value="{{$user->id}} - {{$user->name}}"> </div>
                                     </div>
                                 </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group"> <label for="form_name">Название *</label> <input id="form_name" type="text" name="title" class="form-control" placeholder="Пожалуйства введите название *" required="required" data-error="Название обязательно." value="{{$report->title}}"> </div>
-                                </div>
-                            </div>
                             @switch($author_role)
                                 @case(2)
                                 <div class="row">

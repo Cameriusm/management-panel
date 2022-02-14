@@ -15,7 +15,6 @@
           <thead>
             <tr>
               <th class="text-center"><strong>Дата</strong></th>
-              <th class="text-center"><strong>Название</strong></th>
               <th class="text-center"><strong>Кратк.Содержание</strong></th>
               <th class="text-center"><strong>Действия</strong></th>
             </tr>
@@ -24,7 +23,6 @@
             @foreach ($reports as $report)
             <tr>    
               <th>{{$report->created_at}}</th>
-              <th>{{$report->title}}</th>
               <th>{{$report->desc}}</th>
               <th class="project-actions text-right d-flex justify-content-center">
                 <button class="btn btn-info btn-sm btn_add open_modal_report" value={{$report->id}}>
