@@ -134,13 +134,11 @@
                             <p>¯\_(ツ)_/¯</p> 
                       @endswitch</th>
                     <th class="project-actions text-center ">
-                      <form
-                      action="{{ route('reports.create.user',$user->id) }}" class="d-inline">
-                      <button title="Создать отчёт" class="btn btn-danger btn-detail btn-sm" data-toggle="tooltip" value="{{$user->id}}">
+                      
+                      <button title="Создать отчёт" class="btn btn-danger btn-detail btn-sm open_modal_create" data-toggle="tooltip" value="{{$user->id}}">
                         <i class="fas fa-calendar-plus">
                         </i>
                       </button>
-                      </form>
                       <form
                       action="{{ route('staff.list', $user->id)}}" class="d-inline">
                       <button title="Все отчёты " class="btn btn-danger btn-sm open_modal" data-toggle="tooltip" value="{{$user->id}}">
@@ -152,15 +150,16 @@
                   @endforeach
                 </tbody>
               </table>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+  
 
-<input id="url" type="hidden" value="{{ \Request::url() }}">
-      <!-- MODAL SECTION -->
+  <input id="url" type="hidden" value="{{ \Request::url() }}">
+<!-- Show modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -169,30 +168,26 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
       </div>
       <div class="modal-body">
-        <form id="frmProducts" name="frmProducts" class="form-horizontal" novalidate="">
-          <div class="form-group error">
-            <label for="inputName" class="col-sm-3 control-label" >Название</label>
-            <div class="col-sm-9">
-              <input readonly type="text" class="form-control has-error" id="title" name="title" placeholder="Product Name" value="">
-            </div>
-          </div>
-          <div class="form-group">
+        <form id="formModal" name="formModal" class="form-horizontal" novalidate="">
+          <div class="form-group created-form">
             <label for="inputDetail" class="col-sm-3 control-label">Дата</label>
             <div class="col-sm-9">
-              <input readonly type="text" class="form-control" id="date" name="date" placeholder="Дата" value="">
+              <input readonly type="text" class="form-control" id="created_at" name="created_at" placeholder="Дата" value="">
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group desc-form">
             <label for="inputDetail" class="col-sm-3 control-label">Содержание</label>
             <div class="col-sm-9">
               <textarea readonly class="form-control" id="desc" name="desc" placeholder="Содержание" >
               </textarea>
             </div>
           </div>
+          <div class="modal-footer">
+            <button hidden type="submit" class="btn btn-primary" id="btn-add">Создать отчёт</button>
+            <input type="hidden" id="user_id" name="user_id" value="">
+        </div>
         </form>
       </div>
-      <div class="modal-footer">
-    <input type="hidden" id="user_id" name="user_id" value="">
-  </div>
 </div>
+
 @endsection

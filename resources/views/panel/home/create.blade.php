@@ -21,11 +21,6 @@
                                 </div>
                                 <input hidden id="form_user_id" type="text" readonly name="user_id" value="{{$user->id}}"/>
                             </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group"> <label for="form_name">Название *</label> <input id="form_title" type="text" name="title" class="form-control" placeholder="Пожалуйства введите название *" required="required" data-error="Название обязательно."> </div>
-                                </div>
-                            </div>
                             @switch($author_role)
                             @case(2)
                             <div class="row">

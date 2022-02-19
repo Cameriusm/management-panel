@@ -92,14 +92,6 @@
               </a>
         @endif
         <li class="nav-header">МЕНЕДЖМЕНТ</li>
-        <li class="nav-item">
-          <a href="{{ route('reports.create') }}" class="nav-link">
-            <i class="nav-icon fas fa-columns"></i>
-            <p>
-              Создать отчёт
-            </p>
-          </a>
-        </li>
         <!-- Check user role to show/hide UI accordingly -->
         @if (Auth::user()->roles->pluck('name')[0] == ('admin') || Auth::user()->roles->pluck('name')[0] == ('manager'))
         <li class="nav-item">
@@ -111,6 +103,7 @@
           </a>
         </li>
         @endif
+        @if (Auth::user()->roles->pluck('name')[0] == ('worker'))
         <li class="nav-item">
           <a href="{{ route('reports.index') }}" class="nav-link">
             <i class="nav-icon far fa-calendar-alt"></i>
@@ -119,15 +112,7 @@
             </p>
           </a>
         </li>
-        @if (Auth::user()->roles->pluck('name')[0] == ('admin') || Auth::user()->roles->pluck('name')[0] == ('manager'))
-        <li class="nav-item">
-          <a href="{{route('verify.index')}}" class="nav-link">
-            <i class="nav-icon fas fa-table"></i>
-            <p>
-              Подтверждение
-            </p>
-          </a>
-        </li>
+
         @endif
         @if (Auth::user()->roles->pluck('name')[0] == ('admin'))
         <li class="nav-header">АДМИНИСТРИРОВАНИЕ</li>

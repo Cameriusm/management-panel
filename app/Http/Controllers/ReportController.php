@@ -65,10 +65,10 @@ class ReportController extends Controller
         }
         // Check if report for today's date exists
         // return 'foo';
-
+        
         $author_id = Auth::user()->id;
         $current_report = Report::where('user_id',$author_id)->orderBy('created_at', 'DESC')->first()->created_at->toDateString();
-        if ($current_report == \Carbon\Carbon::now()->toDateString()){
+        if ($author_id == $request->user_id && $current_report == \Carbon\Carbon::now()->toDateString()){
             return redirect()->back()->with('error', 'Отчёт за сегодняшний день уже существует');
         }
         // return $current_report;
@@ -91,7 +91,6 @@ class ReportController extends Controller
             break;
             default:
         }
-        $new_report->title = $request->title;
         $new_report->desc = $request->desc;
         $new_report->save();
         return redirect()->back()->withSuccess('Отчёт был успешно добавлен!');
@@ -109,10 +108,10 @@ class ReportController extends Controller
         $author = Auth::user();
         $author_role = $author->roles()->first()->pivot->role_id;
         $author_id = $author->id;
-        if ($author_role == 2 && $author_id != $id) {
+        $reportById = Report::where('id',$id)->first();
+        if ($author_role == 2 && $author_id != $reportById->user_id) {
             return redirect()->back()->with('error', 'Работник может просматривать только свои отчёты!');
         }
-        $reportById = Report::where('id',$id)->first();
         return $reportById;
     }
 

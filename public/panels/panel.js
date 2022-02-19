@@ -79,7 +79,7 @@ $(document).ready(function () {
                     console.log("Correct Date");
                     $(this).attr("hidden", false);
                 } else {
-                    console.log("Out Side range !!");
+                    console.log("Outside the range!");
                     $(this).attr("hidden", true);
                 }
             });
@@ -154,6 +154,36 @@ $(document).ready(function () {
     var url = $("#url").val();
 
     //display modal form for product EDIT ***************************
+    $(document).on("click", ".open_modal_report", function () {
+        let report_id = $(this).val();
+        // console.log(report_id);
+        $.ajax({
+            type: "GET",
+            url: "http://localhost/panel/reports/" + report_id,
+            dataType: "json",
+            success: function (data) {
+                let d = new Date(data.created_at);
+                dformat =
+                    [d.toISOString().slice(0, 10)].join("-") +
+                    " " +
+                    [d.toLocaleTimeString("en-IT", { hour12: false })];
+                console.log(data);
+                $("#myModalLabel").html(`Отчёт номер ${data.id}`);
+                $("#created_at").val(dformat);
+                $("#desc").val(data.desc);
+                $("#created_at").attr("hidden", false);
+                $("#created_at").datepicker("option", "disabled", true);
+                $("#created_at").prop("readonly", "readonly");
+                $("#desc").prop("required", false);
+                $("#desc").prop("readonly", true);
+                $("#btn-add").attr("hidden", true);
+                $("#myModal").modal("show");
+            },
+            error: function (data) {
+                console.log("Error:", data);
+            },
+        });
+    });
     $(document).on("click", ".open_modal", function () {
         var user_id = $(this).val();
 
@@ -178,30 +208,24 @@ $(document).ready(function () {
             },
         });
     });
-    $(document).on("click", ".open_modal_report", function () {
-        let report_id = $(this).val();
-        console.log(report_id);
-        $.ajax({
-            type: "GET",
-            url: "http://localhost/panel/reports/" + report_id,
-            dataType: "json",
-            success: function (data) {
-                let d = new Date(data.created_at);
-                dformat =
-                    [d.toISOString().slice(0, 10)].join("-") +
-                    " " +
-                    [d.toLocaleTimeString("en-IT", { hour12: false })];
-                console.log(data);
-                $("#myModalLabel").html(`Отчёт номер ${data.id}`);
-                $("#title").val(data.title);
-                $("#date").val(dformat);
-                $("#desc").val(data.desc);
-                $("#myModal").modal("show");
-            },
-            error: function (data) {
-                console.log("Error:", data);
-            },
-        });
+    $(document).on("click", ".open_modal_create", function () {
+        let user_id = $(this).val();
+        console.log(user_id);
+
+        let d = new Date();
+        dformat =
+            [d.toISOString().slice(0, 10)].join("-") +
+            " " +
+            [d.toLocaleTimeString("en-IT", { hour12: false })];
+        console.log(d);
+        $("#btn-add").attr("hidden", false);
+        $("#created_at").prop("readonly", false);
+        $("#desc").prop("readonly", false);
+        $("#desc").prop("required", true);
+        $("#user_id").val(user_id);
+        $("#desc").val("");
+        $("#myModalLabel").html(`Создание отчёта сотрудника ${user_id}`);
+        $("#myModal").modal("show");
     });
 
     //create new product / update existing product ***************************
@@ -237,31 +261,6 @@ $(document).ready(function () {
             dataType: "json",
             success: function (data) {
                 console.log(data);
-                var product =
-                    '<tr id="product' +
-                    data.id +
-                    '"><td>' +
-                    data.id +
-                    "</td><td>" +
-                    data.name +
-                    "</td><td>" +
-                    data.price +
-                    "</td>";
-                product +=
-                    '<td><button class="btn btn-warning btn-detail open_modal" value="' +
-                    data.id +
-                    '">Edit</button>';
-                product +=
-                    ' <button class="btn btn-danger btn-delete delete-product" value="' +
-                    data.id +
-                    '">Delete</button></td></tr>';
-                if (state == "add") {
-                    //if user added a new record
-                    $("#products-list").append(product);
-                } else {
-                    //if user updated an existing record
-                    $("#product" + user_id).replaceWith(product);
-                }
                 $("#frmProducts").trigger("reset");
                 // $(`#th-${user_id}`).html("Гость");
                 console.log(role_id);
@@ -288,24 +287,39 @@ $(document).ready(function () {
             },
         });
     });
-
-    //delete product and remove it from TABLE list ***************************
-    $(document).on("click", ".delete-product", function () {
-        var user_id = $(this).val();
+    $("#formModal").submit(function (e) {
         $.ajaxSetup({
             headers: {
-                "X-CSRF-TOKEN": $('meta[name="_token"]').attr("content"),
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
         });
+        e.preventDefault();
+        if ($("#desc").val() == "") {
+            $(".desc-form").append(
+                `<p class="text-danger">Поле обязательно</p>`
+            );
+            return;
+        }
+        var user_id = $("#user_id").val();
+        var formData = {
+            user_id: user_id,
+            created_at: $("#created_at").val(),
+            desc: $("#desc").val(),
+        };
+        var type = "POST";
+        var my_url = "http://localhost/panel/reports";
+        console.log(formData);
         $.ajax({
-            type: "DELETE",
-            url: url + "/" + user_id,
+            type: type,
+            url: my_url,
+            data: formData,
+            dataType: "json",
             success: function (data) {
                 console.log(data);
-                $("#product" + user_id).remove();
+                $("#myModal").modal("hide");
             },
-            error: function (data) {
-                console.log("Error:", data);
+            error: function (error) {
+                location.reload();
             },
         });
     });
