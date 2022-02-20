@@ -2,17 +2,19 @@
 
 @section('title', 'Главная')
 @section('content')
-
 <section class="content">
   <div class="container-fluid ">
+    <div class="d-flex justify-content-center">
+     
+    </div>
     <!-- Small boxes (Stat box) -->
-    <div class="row d-flex justify-content-center pt-5">
+    <div class="row d-flex justify-content-center pt-3">
       <div class="col-lg-6 col-6">
         <!-- small box -->
         <div class="small-box bg-info text-center">
           <div class="inner">
             <h3>{{$userSubmitted->count()}}</h3>
-            <p>Сотрудников сдали сегодня отчёт</p>
+            <p>Сотрудников сдали отчёт</p>
           </div>
           <div class="icon">
             <i class="far fa-calendar-plus"></i>
@@ -88,7 +90,7 @@
         <div class="small-box bg-danger  text-center">
           <div class="inner">
             <h3>{{$userUnsubmitted->count()}}</h3>
-            <p>Сотрудников не сдали сегодня отчёт</p>
+            <p>Сотрудников не сдали отчёт</p>
           </div>
           <div class="icon">
             <i class="far fa-calendar-minus"></i>

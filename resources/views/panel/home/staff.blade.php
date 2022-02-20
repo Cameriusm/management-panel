@@ -14,13 +14,15 @@
     <input id="start" name="start" type="hidden"/>
     <input id="end" name="end" type="hidden"/>
   </div> --}}
-  {{-- <div class="container text-center mt-5" style="max-width: 450px">
-    <label for="unsumbitted-dates" class="col-sm-12  control-label" >Роль</label>
-    <input class="form-control" name="unsumbitted-dates" />
-    <input id="start" name="start" type="hidden"/>
-    <input id="end" name="end" type="hidden"/>
-  </div> --}}
-  <div class="align-items-center mt-5 m-3 d-flex justify-content-center ">
+  <div class="mx-auto text-center mt-5">
+    <label>Фильтрация по должности:</label>
+    <select  class="form-control w-25 mx-auto role-selector" id="role" name="role" placeholder="Роль" >
+      <option value='2'>Рабочие</option>
+      <option value="3">Менеджеры</option>
+      <option value="4">Администраторы</option>
+    </select>
+  </div>
+  <div class="align-items-center mt-5 m-1 d-flex justify-content-center ">
     <div class="table-responsive w-75">
       <table class="table table-striped table-hover table-condensed">
           <thead>
@@ -39,40 +41,41 @@
                   @continue
               @endif
               <tr class="staff-row text-center">
+                <input type="hidden" name="role_id" value={{$user->role_id}} />
                 <th class="staff-id">{{$user->id}}</th>
                 <th>{{$user->name}}</th>
                 <th>{{$user->email}}</th>
                 <th>{{count($user->reports)}}</th>
                 <th class="staff-buttons text-center d-flex justify-content-center">
                   <!-- Check if user has any reports -->
-                  @if (!empty($user->reports->sortByDesc('created_at')->first()))
-                    <!-- Check if user submitted report for today -->
-                    @if ($user->reports->sortByDesc('created_at')->first()->created_at->toDateString() == \Carbon\Carbon::now()->toDateString())
-                    <button name="check-report" title="Посмотреть отчёт" class="btn btn-info btn-detail btn-sm btn_add open_modal_report m-2" data-toggle="tooltip" value="{{$user->reports->sortByDesc('created_at')->first()->id}}">
-                      <i class="fas fa-eye">
-                      </i>
-                    </button>
-                    <form
-                    action="{{ route('reports.edit', $user->reports->sortByDesc('created_at')->first()->id) }}" class="d-inline">
-                      <button name="edit-report" title="Редактировать отчёт" class="btn btn-info btn-detail btn-sm m-2" data-toggle="tooltip" value="{{$user->id}}">
-                        <i class="fas fa-pencil-alt">
+                    @if (!empty($user->reports->sortByDesc('created_at')->first()))
+                      <!-- Check if user submitted report for today -->
+                      @if ($user->reports->sortByDesc('created_at')->first()->created_at->toDateString() == \Carbon\Carbon::now()->toDateString())
+                      <button name="check-report" title="Посмотреть отчёт" class="btn btn-info btn-detail btn-sm btn_add open_modal_report m-2" data-toggle="tooltip" value="{{$user->reports->sortByDesc('created_at')->first()->id}}">
+                        <i class="fas fa-eye">
                         </i>
                       </button>
-                    </form>
-                    @else
-                    <!-- No report for today from user -->
-                    <button title="Создать отчёт" class="btn btn-danger btn-detail btn-sm open_modal_create" data-toggle="tooltip" value="{{$user->id}}">
-                      <i class="fas fa-calendar-plus">
-                      </i>
-                    </button>
+                      <form
+                      action="{{ route('reports.edit', $user->reports->sortByDesc('created_at')->first()->id) }}" class="d-inline">
+                        <button name="edit-report" title="Редактировать отчёт" class="btn btn-info btn-detail btn-sm m-2" data-toggle="tooltip" value="{{$user->id}}">
+                          <i class="fas fa-pencil-alt">
+                          </i>
+                        </button>
+                      </form>
+                      @else
+                      <!-- No report for today from user -->
+                      <button title="Создать отчёт" class="btn btn-danger btn-detail btn-sm open_modal_create" data-toggle="tooltip" value="{{$user->id}}">
+                        <i class="fas fa-calendar-plus">
+                        </i>
+                      </button>
+                        @endif
+                      @else
+                      <!-- No reports from user at all -->
+                      <button title="Создать отчёт" class="btn btn-danger btn-detail btn-sm open_modal_create" data-toggle="tooltip" value="{{$user->id}}">
+                        <i class="fas fa-calendar-plus">
+                        </i>
+                      </button>
                       @endif
-                    @else
-                    <!-- No reports from user at all -->
-                    <button title="Создать отчёт" class="btn btn-danger btn-detail btn-sm open_modal_create" data-toggle="tooltip" value="{{$user->id}}">
-                      <i class="fas fa-calendar-plus">
-                      </i>
-                    </button>
-                    @endif
               </th>
               <th class="project-actions  text-center">
                   <form action="{{ route('staff.list', $user->id) }}"

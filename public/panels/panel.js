@@ -23,7 +23,7 @@ let localeProperties = {
 };
 
 $(document).ready(function () {
-    $('input[name="unsumbitted-dates"]').daterangepicker(
+    $('input[name="unsubmitted-dates"]').daterangepicker(
         {
             locale: {
                 ...localeProperties,
@@ -235,17 +235,12 @@ $(document).ready(function () {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
         });
-        // console.log($("#role").val());
         e.preventDefault();
         var user_id = $("#user_id").val();
         var formData = {
-            // id: $("#user_id").val(),
             role_id: $("#role").val(),
         };
         var role_id = $("#role").val();
-        // console.log(role_id);
-
-        //used to determine the http verb to use [add=POST], [update=PUT]
         var state = $("#btn-save").val();
         var type = "POST"; //for creating new resource
         var my_url = url;
@@ -262,7 +257,6 @@ $(document).ready(function () {
             success: function (data) {
                 console.log(data);
                 $("#frmProducts").trigger("reset");
-                // $(`#th-${user_id}`).html("Гость");
                 console.log(role_id);
                 switch (role_id) {
                     case "1":
@@ -322,5 +316,16 @@ $(document).ready(function () {
                 location.reload();
             },
         });
+    });
+});
+$(".role-selector").on("change", "", function (e) {
+    var valueSelected = this.value;
+    console.log(valueSelected);
+    jQuery(".staff-row").each(function () {
+        if (valueSelected != $(this).find("input[name=role_id]").val()) {
+            $(this).attr("hidden", true);
+        } else {
+            $(this).attr("hidden", false);
+        }
     });
 });
