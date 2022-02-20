@@ -31,7 +31,7 @@
               <th class="text-center"><strong>Имя</strong></th>
               <th class="text-center"><strong>Почта</strong></th>
               <th class="text-center"><strong>Кол-во отчётов</strong></th>
-              <th class="text-center"><strong>Отчёт за дату</strong></th>
+              <th class="text-center"><strong>Отчёт за сегодня</strong></th>
               <th class="text-center"><strong>Действия</strong></th>
             </tr>
         </thead>
@@ -126,10 +126,5 @@
         </form>
       </div>
 </div>
-
-<!-- Make users array available to JS to filter by date -->
-<script>    
-  let users = {!! json_encode($users, JSON_HEX_TAG) !!};
-</script>
 
 @endsection

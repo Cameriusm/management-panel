@@ -19,16 +19,22 @@ class DownloadController extends Controller
     
     public function index(Request $request)
     {
-        if ($request->filled(['start', 'end'])) {
-            $from = date($request->start);
-            $to = date($request->end);
-            $reports = Report::select('reports.*', 'users.name', 'users.created_at as users_created')->join('users','users.id','=','reports.user_id')->whereBetween('reports.created_at', [$from, $to])->get()->toArray();
+        $date = Carbon::today()->toDateString();
+        $users = Report::select('reports.*', 'users.name', 'users.created_at as users_created')->join('users','users.id','=','reports.user_id');
+        if ($request->filled(['date'])) {
+            $date = date($request->date);
+            $reports = $users->whereDate('reports.created_at', $date);
         } else {
-            $reports = Report::select('reports.*', 'users.name', 'users.created_at as users_created')->join('users','users.id','=','reports.user_id')->whereDate('reports.created_at', Carbon::today())->get()->toArray();
+            $reports = $users->whereDate('reports.created_at', Carbon::today());
         }
-        view()->share('reports',$reports);
-        $title = 'Отчёты за ' . $request->dates . '.pdf';
-        $pdf = PDF::loadView('pdfview', $reports);
+        $unsubmitted = User::whereNotIn('id',$reports->pluck('user_id'))->get();
+        view()->share('reports',collect([
+            'reports' => $reports->get()->toArray(),
+            'unsubmitted' => $unsubmitted->toArray(),
+            'date' => $date,
+        ])->toArray());
+        $title = 'Отчёт за ' . $date . '.pdf';
+        $pdf = PDF::loadView('pdfview', $reports->get()->toArray());
         return $pdf->download($title);
     }
 }

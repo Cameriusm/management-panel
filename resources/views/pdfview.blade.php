@@ -7,28 +7,18 @@
     <meta charset="utf-8">
   </head>
   <body>
-    <h2 style="text-align:center">Отчёты</h2>
-    <table style="width:100%;" border="1">
-      <thead>
-          <tr>
-            <th style="text-align:center"><strong>№</strong></th>
-            <th style="text-align:center"><strong>Дата</strong></th>
-            <th style="text-align:center"><strong>Автор</strong></th>
-            <th style="text-align:center"><strong>Название</strong></th>
-            <th style="text-align:center"><strong>Содержание</strong></th>
-          </tr>
-        </thead>
-      <tbody>
-      @foreach ($reports as  $report)
-      <tr class="report-row">
-        <th>{{$report['id']}}</th>
-        <th>{{Carbon\Carbon::parse($report["created_at"])->toDateString()}}</th>
-        <th>{{$report["name"]}}</th>
-        <th>{{$report['title']}}</th>
-        <th>{{$report['desc']}}</th>
-      </tr>    
-      @endforeach
-      </tbody>
-    </table>
+    <h2 style="text-align:center">Отчёт за {{$reports['date']}}</h2>
+    <h3>Не сдали отчёт:</h3>
+    @foreach ($reports['unsubmitted'] as $user)
+        <p>#
+        <span>{{$user['name']}}</span></p>
+    @endforeach
+    <h3>Сдали отчёт:</h3>
+    @foreach ($reports['reports'] as $user)
+        <p>#
+        <span>{{$user['name']}}</span></p>
+        <p>Содержание
+        <span>{{$user['desc']}}</span></p>
+    @endforeach
   </body>
 </html>"

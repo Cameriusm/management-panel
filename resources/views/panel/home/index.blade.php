@@ -5,7 +5,16 @@
 <section class="content">
   <div class="container-fluid ">
     <div class="d-flex justify-content-center">
-     
+      <form action="{{ route('pdfview',['download'=>'pdf']) }}">
+      <div class="container pt-3" style="max-width: 450px">
+        <label>Фильтрация по сдаче отчёта за определенный день</label>
+        <input class="form-control" name="unsubmitted-dates" />
+        <input id="date" name="date" type="hidden"/>
+      </div>
+      <div class="mt-3 d-flex justify-content-center">
+        <button class="btn btn-danger btn-sm" type="submit">Скачать PDF</button>
+      </div>
+    </form>
     </div>
     <!-- Small boxes (Stat box) -->
     <div class="row d-flex justify-content-center pt-3">
@@ -192,4 +201,9 @@
       </div>
 </div>
 
+
+<!-- Make users array available to JS to filter by date -->
+<script>    
+  let users = {!! json_encode($users, JSON_HEX_TAG) !!};
+</script>
 @endsection
