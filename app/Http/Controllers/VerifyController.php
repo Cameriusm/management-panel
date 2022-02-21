@@ -74,9 +74,10 @@ class VerifyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        $current = ModelHasRole::where('model_id', $id)->update(array('role_id' => '2'));
+        ModelHasRole::where('model_id', $id)->update(array('role_id' => '2'));
+        User::where('id', $id)->update(array('verified' => \Carbon\Carbon::now()));
         return redirect()->back()->withSuccess('Пользователь был успешно подтверждён!');
 
     }

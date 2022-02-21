@@ -76,7 +76,7 @@
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
           </div>
           <div class="modal-body">
-            <form id="frmProducts" name="frmProducts" class="form-horizontal" novalidate="">
+            <div id="frmProducts" name="frmProducts" class="form-horizontal" novalidate="">
               <div class="form-group error">
                 <label for="inputName" class="col-sm-3 control-label" >Имя</label>
                 <div class="col-sm-9">
@@ -89,11 +89,15 @@
                   <input readonly type="email" class="form-control" id="email" name="email" placeholder="Email" value="">
                 </div>
               </div>
-              <div class="form-group">
+              <div class="confirmation-form">
+                <p>Подтвердить</p>
+            </div>
+              <div class="roles-switch">
+              <div class="form-group ">
                 <label for="inputDetail" class="col-sm-3 control-label">Роль</label>
                 <div class="col-sm-9">
                   <select  class="form-control" id="role" name="role" placeholder="Роль" >
-                    <option value="1">Гость</option>
+                    <option value='1'>Гость</option>
                     <option value='2'>Рабочий</option>
                     <option value="3">Менеджер</option>
                     <option value="4">Администратор</option>

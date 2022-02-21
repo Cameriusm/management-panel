@@ -192,7 +192,50 @@ $(document).ready(function () {
                 console.log(data);
                 $("#user_id").val(data.id);
                 $("#name").val(data.name);
+                if (data.role_id[0] == 1) {
+                    $(".roles-switch").attr("hidden", true);
+                    $(".confirmation-form").attr("hidden", false);
+                    $(".confirmation-form").html(`
+                    <form id="verify-form">
+                    <input type="hidden" id="id" value="${data.id}"></input>
+                      <button type="submit" class="m-2 btn btn-warning btn-sm delete-btn">
+                          Подтвердить
+                      </button>
+                    </form>
+                  </div>`);
+                    $("#btn-save").attr("hidden", true);
+                } else {
+                    $(".roles-switch").attr("hidden", false);
+                    $(".confirmation-form").attr("hidden", true);
+                    $("#btn-save").attr("hidden", false);
+                }
                 $("#email").val(data.email);
+
+                $("#verify-form").on("submit", function (e) {
+                    $.ajaxSetup({
+                        headers: {
+                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
+                                "content"
+                            ),
+                        },
+                    });
+                    e.preventDefault();
+                    let id = $(this).find("#id").val();
+                    console.log(id);
+                    $.ajax({
+                        type: "PUT",
+                        url: `http://localhost/panel/verify/${id}`,
+                        data: { id: id },
+                        success: function (data) {
+                            location.reload();
+                            console.log(data);
+                            $("#myModal").modal("hide");
+                        },
+                        error: function (error) {
+                            location.reload();
+                        },
+                    });
+                });
                 $(`#role option[value=${data.role_id}]`).attr(
                     "selected",
                     "selected"
@@ -254,7 +297,6 @@ $(document).ready(function () {
             success: function (data) {
                 console.log(data);
                 $("#frmProducts").trigger("reset");
-                console.log(role_id);
                 switch (role_id) {
                     case "1":
                         $(`#th-${user_id}`).html("Гость");

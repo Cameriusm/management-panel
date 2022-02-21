@@ -201,7 +201,6 @@
       </div>
 </div>
 
-
 <!-- Make users array available to JS to filter by date -->
 <script>    
   let users = {!! json_encode($userSubmitted, JSON_HEX_TAG) !!};
