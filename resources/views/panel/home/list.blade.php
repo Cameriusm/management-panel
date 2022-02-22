@@ -50,40 +50,34 @@
 
 <input id="url" type="hidden" value="{{ \Request::url() }}">
   <!-- MODAL SECTION -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-    <div class="modal-header">
-      <h4 class="modal-title" id="myModalLabel">Отчёт номер</h4>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-    </div>
-    <div class="modal-body">
-      <form id="frmProducts" name="frmProducts" class="form-horizontal" novalidate="">
-        <div class="form-group error">
-          <label for="inputName" class="col-sm-3 control-label" >Название</label>
-          <div class="col-sm-9">
-            <input readonly type="text" class="form-control has-error" id="title" name="title" placeholder="Product Name" value="">
-          </div>
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Отчёт номер</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
         </div>
-        <div class="form-group">
-          <label for="inputDetail" class="col-sm-3 control-label">Дата</label>
-          <div class="col-sm-9">
-            <input readonly type="text" class="form-control" id="date" name="date" placeholder="Дата" value="">
+        <div class="modal-body">
+          <form id="formModal" name="formModal" class="form-horizontal" novalidate="">
+            <div class="form-group created-form">
+              <label for="inputDetail" class="col-sm-3 control-label">Дата</label>
+              <div class="col-sm-9">
+                <input readonly type="text" class="form-control" id="created_at" name="created_at" placeholder="Дата" value="">
+              </div>
+            </div>
+            <div class="form-group desc-form">
+              <label for="inputDetail" class="col-sm-3 control-label">Содержание</label>
+              <div class="col-sm-9">
+                <textarea readonly class="form-control" id="desc" name="desc" placeholder="Содержание" >
+                </textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button hidden type="submit" class="btn btn-primary" id="btn-add">Создать отчёт</button>
+              <input type="hidden" id="user_id" name="user_id" value="">
           </div>
+          </form>
         </div>
-        <div class="form-group">
-          <label for="inputDetail" class="col-sm-3 control-label">Содержание</label>
-          <div class="col-sm-9">
-            <textarea readonly class="form-control" id="desc" name="desc" placeholder="Содержание" >
-            </textarea>
-          </div>
-        </div>
-      </form>
-    </div>
-      <div class="modal-footer">
-        <input type="hidden" id="user_id" name="user_id" value="">
-      </div>
-    </div>
   </div>
-</div>
+  
 @endsection

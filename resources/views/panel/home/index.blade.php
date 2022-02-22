@@ -17,78 +17,61 @@
     </form>
     </div>
     <!-- Small boxes (Stat box) -->
-    <div class="row d-flex justify-content-center pt-3">
+    <div class="dashboard-tables row d-flex justify-content-center pt-3">
       <div class="col-lg-6 col-6">
         <!-- small box -->
         <div class="small-box bg-info text-center">
-          <div class="inner">
-            <h3>{{$userSubmitted->count()}}</h3>
+          <div class="inner innerSubmitted">
             <p>Сотрудников сдали отчёт</p>
           </div>
           <div class="icon">
             <i class="far fa-calendar-plus"></i>
           </div>
-          <a href="{{ route('reports.index') }}"  class="small-box-footer">Список отчётов</a>
+          <a href="{{ route('staff') }}" class="small-box-footer">Список сотрудников</a>
         </div>
         <div class="align-items-center mt-5 m-3 d-flex justify-content-center ">
           <div class="table-responsive w-100">
-              <table class="table table-striped table-hover table-condensed">
+              <table class="table submitted-table table-striped table-hover table-condensed">
                 <thead>
-                  <tr>
+                  <tr >
                     <th class="text-center"><strong>№</strong></th>
                     <th class="text-center"><strong>Имя</strong></th>
                     <th class="text-center"><strong>Почта</strong></th>
                     <th class="text-center"><strong>Роль</strong></th>
                     <th class="text-center"><strong>Действия</strong></th>
                   </tr>
+                  <tbody>
+                    @foreach ($users as $user)
+                    <tr class="submitted-row">
+                      <th class="text-center id">{{$user->id}}</th>
+                      <th class="text-center">{{$user->name}}</th>
+                      <th class="text-center">{{$user->email}}</th>
+                      <input type='hidden' id="verified" value={{$user->verified}}/>
+                      <th class="text-center">
+                        @switch($user->role_id)
+                          @case(1)
+                              <p>Гость</p>
+                          @break
+                          @case(2)
+                          <p>Работник</p>
+                          @break
+                          @case(3)
+                              <p>Менеджер</p>
+                          @break
+                          @case(4)
+                              <p>Администратор</p>
+                          @break
+                          @default
+                              <p>¯\_(ツ)_/¯</p> 
+                        @endswitch
+                      </th>
+                      <th class="project-actions text-center">
+                       
+                      </th>
+                    </tr>            
+                    @endforeach
+                  </tbody> 
                 </thead>
-                <tbody>
-                  @foreach ($userSubmitted as $user)
-                  <tr ">
-                    <th class="text-center">{{$user->id}}</th>
-                    <th class="text-center">{{$user->name}}</th>
-                    <th class="text-center">{{$user->email}}</th>
-                    <th class="text-center">
-                      @switch($user->role_id)
-                        @case(1)
-                            <p>Гость</p>
-                        @break
-                        @case(2)
-                            <p>Работник</p>
-                        @break
-                        @case(3)
-                            <p>Менеджер</p>
-                        @break
-                        @case(4)
-                            <p>Администратор</p>
-                        @break
-                        @default
-                            <p>¯\_(ツ)_/¯</p> 
-                      @endswitch
-                    </th>
-                    <th class="project-actions text-center">
-                      <button title="Посмотреть отчёт" class="btn btn-info btn-detail btn-sm btn_add open_modal_report" data-toggle="tooltip" value="{{$user->reports->sortByDesc('created_at')->first()->id}}">
-                        <i class="fas fa-eye">
-                        </i>
-                      </button>
-                      <form
-                      action="{{ route('reports.edit', $user->reports->sortByDesc('created_at')->first()->id)}}" class="d-inline">
-                      <button title="Редактировать отчёт" class="btn btn-info btn-detail btn-sm open_modal" data-toggle="tooltip" value="{{$user->id}}">
-                        <i class="fas fa-pencil-alt">
-                        </i>
-                      </button>
-                      </form>
-                      <form
-                      action="{{ route('staff.list', $user->id)}}" class="d-inline">
-                      <button title="Все отчёты" class="btn btn-info btn-detail btn-sm open_modal" data-toggle="tooltip" value="{{$user->id}}">
-                        <i class="fas fa-table">
-                        </i>
-                      </button>
-                    </form>
-                    </th>
-                  </tr>            
-                  @endforeach
-                </tbody>
               </table>
           </div>
         </div>
@@ -97,8 +80,7 @@
       <div class="col-lg-6 col-6">
         <!-- small box -->
         <div class="small-box bg-danger  text-center">
-          <div class="inner">
-            <h3>{{$userUnsubmitted->count()}}</h3>
+          <div class="inner innerUnsubmitted">
             <p>Сотрудников не сдали отчёт</p>
           </div>
           <div class="icon">
@@ -106,9 +88,9 @@
           </div>
           <a href="{{ route('staff') }}" class="small-box-footer">Список сотрудников</a>
         </div>
-        <div class="align-items-center mt-5 m-3 d-flex justify-content-center ">
+        <div class=" align-items-center mt-5 m-3 d-flex justify-content-center ">
           <div class="table-responsive w-100">
-              <table class="table table-striped table-hover table-condensed">
+              <table class="table unsubmitted-table table-striped table-hover table-condensed">
                 <thead>
                   <tr>
                     <th class="text-center"><strong>№</strong></th>
@@ -119,14 +101,12 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach ($userUnsubmitted as $user)
-                    @if ($user->role_id == 1)
-                     @continue
-                   @endif
-                  <tr ">
-                    <th class="text-center">{{$user->id}}</th>
+                  @foreach ($users as $user)
+                  <tr class="unsubmitted-row">
+                    <th class="text-center id">{{$user->id}}</th>
                     <th class="text-center">{{$user->name}}</th>
                     <th class="text-center">{{$user->email}}</th>
+                    <input type='hidden' name="verified" value={{$user->verified}}/>
                     <th class="text-center"> 
                       @switch($user->role_id)
                         @case(1)
@@ -203,6 +183,6 @@
 
 <!-- Make users array available to JS to filter by date -->
 <script>    
-  let users = {!! json_encode($userSubmitted, JSON_HEX_TAG) !!};
+  let users = {!! json_encode($users, JSON_HEX_TAG) !!};
 </script>
 @endsection

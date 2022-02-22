@@ -97,7 +97,6 @@
                 <label for="inputDetail" class="col-sm-3 control-label">Роль</label>
                 <div class="col-sm-9">
                   <select  class="form-control" id="role" name="role" placeholder="Роль" >
-                    <option value='1'>Гость</option>
                     <option value='2'>Рабочий</option>
                     <option value="3">Менеджер</option>
                     <option value="4">Администратор</option>

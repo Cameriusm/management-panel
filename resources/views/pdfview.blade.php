@@ -17,7 +17,8 @@
     @foreach ($reports['reports'] as $user)
         <p>#
         <span>{{$user['name']}}</span></p>
-        <p>Содержание
+        <p>Содержание:
+          <br/>
         <span>{{$user['desc']}}</span></p>
     @endforeach
   </body>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use App\Models\Report;
 use App\Models\User;
 use Carbon\Carbon;
@@ -28,9 +29,12 @@ class DownloadController extends Controller
             $reports = $users->whereDate('reports.created_at', Carbon::today());
         }
         $unsubmitted = User::whereNotIn('id',$reports->pluck('user_id'))->get();
+        $verifiedFilter = Arr::where($unsubmitted->toArray(), function ($value, $key) use($date) {
+            return Carbon::parse($value['verified'])->lte($date);
+        });
         view()->share('reports',collect([
             'reports' => $reports->get()->toArray(),
-            'unsubmitted' => $unsubmitted->toArray(),
+            'unsubmitted' => $verifiedFilter,
             'date' => $date,
         ])->toArray());
         $title = 'Отчёт за ' . $date . '.pdf';
