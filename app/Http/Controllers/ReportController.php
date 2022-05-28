@@ -165,7 +165,6 @@ class ReportController extends Controller
         } else {
             $current->created_at = $request->created_at;
         }
-        $current->title = $request->title;
         $current->desc = $request->desc;
         $current->save();
         return redirect()->back()->withSuccess('Отчёт был успешно отредактирован!');

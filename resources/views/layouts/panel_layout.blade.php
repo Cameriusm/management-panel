@@ -126,7 +126,7 @@
         </li>
         @endif
         <li class="nav-header">ПРОФИЛЬ</li>
-        <li class="nav-item">
+        {{-- <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon far fa-circle text-danger"></i>
             <p class="text">Настройки</p>
@@ -137,7 +137,7 @@
             <i class="nav-icon far fa-circle text-warning"></i>
             <p>Смена данных</p>
           </a>
-        </li>
+        </li> --}}
         <li class="nav-item">
             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
               @csrf
